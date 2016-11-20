@@ -30,6 +30,7 @@ function createPropTypeWithProperties(properties, errorDesc = {
   };
 }
 
+const PropTypeData = createPropTypeWithProperties(['getSize', 'getObjectAt']);
 const PropTypeDataListWrapper = PropTypes.instanceOf(DataListWrapper);
 
 function PropTypeFilter(props, propName, componentName) {
@@ -66,4 +67,5 @@ export default {
   createPropTypeWithProperties,
   PropTypeDataListWrapper,
   PropTypeFilter,
+  PropTypeData,
 };
