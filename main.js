@@ -1,5 +1,7 @@
-import addDataCtxt from './HOC/addDataCtxt';
+import HOC from './HOC';
+import Data from './Data';
 
 export default {
-  addDataCtxt,
+  HOC,
+  Data,
 };
