@@ -45,20 +45,20 @@ function addSort(TableComponent) {
           sortColumn.length > 0) {
         sortIndexes = this._getIndexes();
         sortIndexes.sort((indexA, indexB) => {
-          const objA = this.props.data.getObjectAt(indexA);
-          const objB = this.props.data.getObjectAt(indexB);
-          if (objA === null && objB === null) {
+          const rowA = this.props.data.getObjectAt(indexA);
+          const rowB = this.props.data.getObjectAt(indexB);
+          if (rowA === null && rowB === null) {
             return 0;
           }
 
           let sortVal = 0;
-          if (objA == null) {
+          if (rowA == null) {
             sortVal = 1;
-          } else if (objB == null) {
+          } else if (rowB == null) {
             sortVal = -1;
           } else {
-            const valueA = getRowValue(objA, sortColumn);
-            const valueB = getRowValue(objB, sortColumn);
+            const valueA = getRowValue(rowA, sortColumn);
+            const valueB = getRowValue(rowB, sortColumn);
             if (valueA > valueB) {
               sortVal = 1;
             }
