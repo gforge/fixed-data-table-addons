@@ -9,7 +9,9 @@ function addDataCtxt(Wrapped) {
 
       this.refresh = this.refresh.bind(this);
       const data = this.props.data;
-      data.setCallback(this.refresh, 'data');
+      if ({}.hasOwnProperty.call(data, 'setCallback')) {
+        data.setCallback(this.refresh, 'data');
+      }
 
       this.state = {
         data: props.data,
