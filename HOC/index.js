@@ -4,7 +4,7 @@ import addDataCtxt from './addDataCtxt';
 import addData2CellFromCtxt from './addData2CellFromCtxt';
 import addForm2Cell from './addForm2Cell';
 
-export default {
+module.exports = {
   addFilter,
   addSort,
   addDataCtxt,

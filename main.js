@@ -1,7 +1,7 @@
 import HOC from './HOC';
 import Data from './Data';
 
-export default {
+module.exports = {
   HOC,
   Data,
 };

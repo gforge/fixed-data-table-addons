@@ -1,7 +1,9 @@
 import DataListWrapper from './DataListWrapper';
 import PropTypes from './PropTypes';
 
-export default {
+const Data = {
   DataListWrapper,
   PropTypes,
 };
+
+module.exports = Data;

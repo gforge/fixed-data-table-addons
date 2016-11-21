@@ -63,7 +63,7 @@ function PropTypeFilter(props, propName, componentName) {
   return (null);
 }
 
-export default {
+module.exports = {
   createPropTypeWithProperties,
   PropTypeDataListWrapper,
   PropTypeFilter,
