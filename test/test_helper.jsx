@@ -11,12 +11,27 @@ global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.window = global.document.defaultView;
 const $ = jquery(global.window);
 
+class Wrapper extends React.Component {
+  render() {
+    return this.props.children;
+  }
+}
+
+Wrapper.propTypes = {
+  children: React.PropTypes.node,
+};
+
 // build 'renderComponent' helper that should render a given react class
 function renderComponent(ComponentClass, props) {
   let node = null;
-  TestUtils.renderIntoDocument(
-    <ComponentClass {...props} ref={n => (node = n)} />
-  );
+  if (typeof (ComponentClass) === 'function') {
+    TestUtils.renderIntoDocument(
+      <Wrapper ref={n => (node = n)}>
+        <ComponentClass {...props} />
+      </Wrapper>);
+  } else {
+    TestUtils.renderIntoDocument(<ComponentClass {...props} ref={n => (node = n)} />);
+  }
 
   return node;
 }
@@ -32,4 +47,4 @@ $.fn.simulate = (eventName, value) => {
 // Set up chai-jquery
 chaiJquery(chai, chai.util, $);
 
-export { renderComponent, expect };
+export { renderComponent, expect, $ };

@@ -3,13 +3,13 @@ import React from 'react';
 import { describe, it } from 'mocha';
 import { Table as Table2, Column as Column2, Cell as Cell2 } from 'fixed-data-table-2';
 import { renderComponent, expect } from '../test_helper';
-import HOC from '../../HOC';
+import { addFilter, addDataCtxt, addData2CellFromCtxt } from '../../HOC';
 import Data from '../stub/Data';
 
-const TextCell = ({ rowIndex, columnKey }, { data }) =>
+const TextCell = addData2CellFromCtxt(({ rowIndex, columnKey, data }) =>
   (<Cell2>
     {data.getObjectAt(rowIndex)[columnKey]}
-  </Cell2>);
+  </Cell2>));
 
 TextCell.propTypes = {
   rowIndex: React.PropTypes.number,
@@ -18,12 +18,17 @@ TextCell.propTypes = {
 
 describe('Investigate addFilter', () => {
   it('should produce the full data when not filtering', () => {
-    const FilterTable = HOC.addFilter(HOC.addDataCtxt(Table2));
-    const node = renderComponent(
-      <FilterTable
-        rowHeight="50"
+    const FilterTable = addFilter(addDataCtxt(Table2));
+    const data = new Data();
+
+    const node = renderComponent(props =>
+      (<FilterTable
+        rowHeight={50}
+        height={500}
+        width={500}
         filters={{ name: '' }}
-        data={new Data()}
+        data={data}
+        {...props}
       >
         <Column2
           columnKey="id"
@@ -37,8 +42,10 @@ describe('Investigate addFilter', () => {
           header={<Cell2>Name</Cell2>}
           cell={<TextCell />}
         />
-      </FilterTable>);
+      </FilterTable>));
 
-    expect(node).to.contain('Test name no 42');
+    for (let i = 0; i < data.getSize(); i += 1) {
+      expect(node).to.contains(`Test name no ${i}`);
+    }
   });
 });
