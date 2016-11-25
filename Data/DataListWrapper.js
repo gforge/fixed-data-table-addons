@@ -25,7 +25,7 @@ class DataListWrapper {
     }
 
     return this._data.getObjectAt(
-      this._indexMap[index]
+      this._indexMap[index],
     );
   }
 }
