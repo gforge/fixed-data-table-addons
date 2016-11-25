@@ -51,11 +51,15 @@ function addFilter(TableComponent, filter = filterFn) {
       const filters = {};
       Object
         .keys(this.props.filters)
+        .map((key) => {
+          if (typeof this.props.filters[key] !== 'string') {
+            this.props.filters[key] = this.props.filters[key].toString();
+          }
+
+          return (key);
+        })
         .filter(key => this.props.filters[key].length > 0)
-        .forEach((key) => {
-          filters[key] = this.props.filters[key].toLowerCase();
-          return (null);
-        });
+        .forEach(key => (filters[key] = this.props.filters[key].toLowerCase()));
 
       let filteredIndexes = null;
       if (Object.keys(filters).length > 0) {
