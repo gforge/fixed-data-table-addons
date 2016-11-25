@@ -1,22 +1,22 @@
 /* eslint "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]*/
 import React from 'react';
 import { describe, it, beforeEach } from 'mocha';
-import { Table, Column, Cell } from 'fixed-data-table';
-import { Table as Table2, Column as Column2, Cell as Cell2 } from 'fixed-data-table-2';
+import FDT from 'fixed-data-table';
+import FDT2 from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { TextCell2Ctxt as TextCell2, TextCellCtxt as TextCell } from '../test_setup';
+import { TextCell2Ctxt as TextCell2, getCtxtTextCell } from '../test_setup';
 import { addFilter, addDataCtxt } from '../../HOC';
 import Data from '../stub/Data';
 
-describe('Investigate addFilter for fixed-data-table-2', () => {
+describe('Investigate addFilter', () => {
   const data = new Data();
-  let node;
+  function getNode(Lib) {
+    const FilterTable = addFilter(addDataCtxt(Lib.Table));
 
-  beforeEach(() => {
-    const FilterTable = addFilter(addDataCtxt(Table));
+    const TextCell = getCtxtTextCell(Lib);
 
-    node = mount(
+    const node = mount(
       <FilterTable
         rowHeight={50}
         headerHeight={50}
@@ -25,109 +25,82 @@ describe('Investigate addFilter for fixed-data-table-2', () => {
         filters={{ id: '', name: '' }}
         data={data}
       >
-        <Column
+        <Lib.Column
           columnKey="id"
           width={250}
-          header={<Cell2>ID</Cell2>}
+          header={<Lib.Cell>ID</Lib.Cell>}
           cell={<TextCell />}
         />
-        <Column
+        <Lib.Column
           columnKey="name"
           width={250}
-          header={<Cell>Name</Cell>}
+          header={<Lib.Cell>Name</Lib.Cell>}
           cell={<TextCell />}
         />
       </FilterTable>);
-  });
 
-  it('should produce the full data when not filtering', () => {
-    for (let i = 0; i < data.getSize(); i += 1) {
-      expect(node.find(`#${i}_id`)).to.have.length(1, `Can't find cell with id: ${i}_id`);
-      expect(node.find(`#${i}_name`)).to.have.length(1, `Can't find cell with id: ${i}_name`);
-    }
-  });
+    return node;
+  }
 
-  it('add filter should filter - removing takes it back to original status', () => {
-    node.setProps({ filters: { id: 1 } });
-    it('make sure that only the cells with id=1 are present', () => {
+  function test(Lib) {
+    it('should produce the full data when not filtering', () => {
+      const node = getNode(Lib);
+
       for (let i = 0; i < data.getSize(); i += 1) {
-        if (i === 1) {
-          expect(node.find(`#${i}_id`)).to.have.length(1, `Can't find cell with id: ${i}_id`);
-          expect(node.find(`#${i}_name`)).to.have.length(1, `Can't find cell with id: ${i}_name`);
-        } else {
-          expect(node.find(`#${i}_id`)).to.have.length(0, `Should not find cell with id: ${i}_id`);
-          expect(node.find(`#${i}_name`)).to.have.length(0, `Should not find cell with id: ${i}_name`);
+        const row = data.getObjectAt(i);
+        expect(node.find(`#${row.id}_id`)).to.have.length(1, `Can't find cell with id: ${row.id}_id`);
+        expect(node.find(`#${row.id}_name`)).to.have.length(1, `Can't find cell with id: ${row.id}_name`);
+      }
+    });
+
+    describe('add filter should filter - removing takes it back to original status', () => {
+      const node = getNode(Lib);
+
+
+      it('make sure that only the cells with id=1 are present', () => {
+        node.setProps({ filters: { id: 1 } });
+
+        for (let i = 0; i < data.getSize(); i += 1) {
+          const row = data.getObjectAt(i);
+          if (row.id === 1) {
+            expect(node.find(`#${row.id}_id`)).to.have.length(1, `Can't find cell with id: ${row.id}_id`);
+            expect(node.find(`#${row.id}_name`)).to.have.length(1, `Can't find cell with id: ${row.id}_name`);
+          } else {
+            expect(node.find(`#${row.id}_id`)).to.have.length(0, `Should not find cell with id: ${row.id}_id`);
+            expect(node.find(`#${row.id}_name`)).to.have.length(0, `Should not find cell with id: ${row.id}_name`);
+          }
         }
-      }
-    });
+      });
 
-    node.setProps({ filters: { id: '' } });
-    it('make sure that all cells are present after removing the filter', () => {
-      for (let i = 0; i < data.getSize(); i += 1) {
-        expect(node.find(`#${i}_id`)).to.have.length(1, `Can't find cell with id: ${i}_id`);
-        expect(node.find(`#${i}_name`)).to.have.length(1, `Can't find cell with id: ${i}_name`);
-      }
-    });
-  });
-});
+      it('make sure that all all filtered out', () => {
+        node.setProps({ filters: { id: 1, name: 'nonexisting_name' } });
 
-describe('Investigate addFilter for fixed-data-table-2', () => {
-  const data = new Data();
-  let node;
-
-  beforeEach(() => {
-    const FilterTable = addFilter(addDataCtxt(Table2));
-
-    node = mount(
-      <FilterTable
-        rowHeight={50}
-        height={500}
-        width={500}
-        filters={{ id: '', name: '' }}
-        data={data}
-      >
-        <Column2
-          columnKey="id"
-          width={250}
-          header={<Cell2>ID</Cell2>}
-          cell={<TextCell2 />}
-        />
-        <Column2
-          columnKey="name"
-          width={250}
-          header={<Cell2>Name</Cell2>}
-          cell={<TextCell2 />}
-        />
-      </FilterTable>);
-  });
-
-  it('should produce the full data when not filtering', () => {
-    for (let i = 0; i < data.getSize(); i += 1) {
-      expect(node.find(`#${i}_id`)).to.have.length(1, `Can't find cell with id: ${i}_id`);
-      expect(node.find(`#${i}_name`)).to.have.length(1, `Can't find cell with id: ${i}_name`);
-    }
-  });
-
-  it('add filter should filter - removing takes it back to original status', () => {
-    node.setProps({ filters: { id: 1 } });
-    it('make sure that only the cells with id=1 are present', () => {
-      for (let i = 0; i < data.getSize(); i += 1) {
-        if (i === 1) {
-          expect(node.find(`#${i}_id`)).to.have.length(1, `Can't find cell with id: ${i}_id`);
-          expect(node.find(`#${i}_name`)).to.have.length(1, `Can't find cell with id: ${i}_name`);
-        } else {
-          expect(node.find(`#${i}_id`)).to.have.length(0, `Should not find cell with id: ${i}_id`);
-          expect(node.find(`#${i}_name`)).to.have.length(0, `Should not find cell with id: ${i}_name`);
+        for (let i = 0; i < data.getSize(); i += 1) {
+          const row = data.getObjectAt(i);
+          expect(node.find(`#${row.id}_id`)).to.have.length(0, `Should not find cell with id: ${row.id}_id`);
+          expect(node.find(`#${row.id}_name`)).to.have.length(0, `Should not find cell with id: ${row.id}_name`);
         }
-      }
-    });
+      });
 
-    node.setProps({ filters: { id: '' } });
-    it('make sure that all cells are present after removing the filter', () => {
-      for (let i = 0; i < data.getSize(); i += 1) {
-        expect(node.find(`#${i}_id`)).to.have.length(1, `Can't find cell with id: ${i}_id`);
-        expect(node.find(`#${i}_name`)).to.have.length(1, `Can't find cell with id: ${i}_name`);
-      }
+
+      it('make sure that all cells are present after removing the filter', () => {
+        node.setProps({ filters: { id: 1 } });
+        node.setProps({ filters: { id: '' } });
+
+        for (let i = 0; i < data.getSize(); i += 1) {
+          const row = data.getObjectAt(i);
+          expect(node.find(`#${row.id}_id`)).to.have.length(1, `Can't find cell with id: ${row.id}_id`);
+          expect(node.find(`#${row.id}_name`)).to.have.length(1, `Can't find cell with id: ${row.id}_name`);
+        }
+      });
     });
+  }
+
+  describe('check functionality with fixed-data-table', () => {
+    test(FDT);
+  });
+
+  describe('check functionality with fixed-data-table-2', () => {
+    test(FDT2);
   });
 });

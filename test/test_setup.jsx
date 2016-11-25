@@ -15,54 +15,38 @@ Error.stackTraceLimit = 10;
 chai.use(chaiEnzyme);
 chai.use(dirtyChai);
 
-export const TextCell = ({ rowIndex, columnKey, data }) => (
-  <Cell id={`${rowIndex}_${columnKey}`}>
-    {data.getObjectAt(rowIndex)[columnKey]}
-  </Cell>);
+export function getTextCell(Lib) {
+  const TxtCell = ({ rowIndex, columnKey, data }) => (
+    <Lib.Cell id={`${rowIndex}_${columnKey}`}>
+      {data.getObjectAt(rowIndex)[columnKey]}
+    </Lib.Cell>);
 
-TextCell.propTypes = {
-  rowIndex: React.PropTypes.number,
-  columnKey: React.PropTypes.string,
-  data: PropTypeData,
-};
+  TxtCell.propTypes = {
+    rowIndex: React.PropTypes.number,
+    columnKey: React.PropTypes.string,
+    data: PropTypeData,
+  };
 
-export const TextCell2 = ({ rowIndex, columnKey, data }) =>
-  (<Cell2 id={`${rowIndex}_${columnKey}`}>
-    {data.getObjectAt(rowIndex)[columnKey]}
-  </Cell2>);
+  return TxtCell;
+}
 
-TextCell2.propTypes = {
-  rowIndex: React.PropTypes.number,
-  columnKey: React.PropTypes.string,
-  data: PropTypeData,
-};
+export function getCtxtTextCell(Lib) {
+  const TxtCtxt = ({ rowIndex, columnKey }, { data }) => {
+    const row = data.getObjectAt(rowIndex);
 
-// Context variants
+    return (<Lib.Cell id={`${row.id}_${columnKey}`}>
+      {row[columnKey]}
+    </Lib.Cell>);
+  };
 
-export const TextCellCtxt = ({ rowIndex, columnKey }, { data }) =>
-  (<Cell id={`${rowIndex}_${columnKey}`}>
-    {data.getObjectAt(rowIndex)[columnKey]}
-  </Cell>);
+  TxtCtxt.propTypes = {
+    rowIndex: React.PropTypes.number,
+    columnKey: React.PropTypes.string,
+  };
 
-TextCellCtxt.propTypes = {
-  rowIndex: React.PropTypes.number,
-  columnKey: React.PropTypes.string,
-};
+  TxtCtxt.contextTypes = {
+    data: PropTypeData,
+  };
 
-TextCellCtxt.contextTypes = {
-  data: PropTypeData,
-};
-
-export const TextCell2Ctxt = ({ rowIndex, columnKey }, { data }) =>
-  (<Cell2 id={`${rowIndex}_${columnKey}`}>
-    {data.getObjectAt(rowIndex)[columnKey]}
-  </Cell2>);
-
-TextCell2Ctxt.propTypes = {
-  rowIndex: React.PropTypes.number,
-  columnKey: React.PropTypes.string,
-};
-
-TextCell2Ctxt.contextTypes = {
-  data: PropTypeData,
-};
+  return TxtCtxt;
+}
