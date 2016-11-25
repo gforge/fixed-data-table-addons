@@ -1,5 +1,5 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */import React from 'react';
-import { describe, it, beforeEach } from 'mocha';
+import { describe, it } from 'mocha';
 import FDT from 'fixed-data-table';
 import FDT2 from 'fixed-data-table-2';
 import { expect } from 'chai';

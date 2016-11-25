@@ -1,6 +1,4 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */import React from 'react';
-import { Cell } from 'fixed-data-table';
-import { Cell as Cell2 } from 'fixed-data-table-2';
 import jsdom from 'jsdom';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';

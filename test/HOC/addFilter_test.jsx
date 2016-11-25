@@ -1,11 +1,11 @@
 /* eslint "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]*/
 import React from 'react';
-import { describe, it, beforeEach } from 'mocha';
+import { describe, it } from 'mocha';
 import FDT from 'fixed-data-table';
 import FDT2 from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { TextCell2Ctxt as TextCell2, getCtxtTextCell } from '../test_setup';
+import { getCtxtTextCell } from '../test_setup';
 import { addFilter, addDataCtxt } from '../../HOC';
 import Data from '../stub/Data';
 
