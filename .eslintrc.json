@@ -18,7 +18,6 @@
     "no-console": 0,
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "arrow-body-style": ["error", "as-needed", { "requireReturnForObjectLiteral": true }],
-    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.js", "**/*.spec.js"]}]
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }]
   }
 }
