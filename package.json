@@ -4,8 +4,8 @@
   "description": "Addons for the fixed-data-table & fixed-data-table-2",
   "main": "main.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_setup.jsx --recursive \"test/**/*.@(js|jsx)\"",
-    "test:watch": "npm run test --watch"
+    "test": "mocha --compilers js:babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
