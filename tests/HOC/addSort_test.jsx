@@ -6,9 +6,9 @@ import FDT2 from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { getCtxtTextCell } from '../test_setup';
-import { addSort, addDataCtxt } from '../../HOC';
+import { addSort, addDataCtxt } from '../../src/HOC';
 import Data from '../stub/Data';
-import SortTypes from '../../Data/SortTypes';
+import SortTypes from '../../src/Data/SortTypes';
 
 describe('Investigate addSort', () => {
   const data = new Data();

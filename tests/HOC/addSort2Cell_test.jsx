@@ -5,8 +5,8 @@ import FDT2 from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { addSort2Cell } from '../../HOC';
-import { SortTypes } from '../../Data';
+import { addSort2Cell } from '../../src/HOC';
+import { SortTypes } from '../../src/Data';
 
 describe('Investigate addSort2Cell', () => {
   let sortTriggered;

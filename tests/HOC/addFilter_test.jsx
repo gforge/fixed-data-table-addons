@@ -6,7 +6,7 @@ import FDT2 from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { getCtxtTextCell } from '../test_setup';
-import { addFilter, addDataCtxt } from '../../HOC';
+import { addFilter, addDataCtxt } from '../../src/HOC';
 import Data from '../stub/Data';
 
 describe('Investigate addFilter', () => {

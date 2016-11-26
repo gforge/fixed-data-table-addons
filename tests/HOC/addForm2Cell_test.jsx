@@ -5,7 +5,7 @@ import FDT2 from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { addForm2Cell } from '../../HOC';
+import { addForm2Cell } from '../../src/HOC';
 
 describe('Investigate addForm2Cell', () => {
   let onChange;

@@ -5,7 +5,7 @@ import FDT2 from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import Data from '../stub/Data';
-import { addDataCtxt } from '../../HOC';
+import { addDataCtxt } from '../../src/HOC';
 import { getCtxtTextCell } from '../test_setup';
 
 describe('Investigate addDataCtxt', () => {
