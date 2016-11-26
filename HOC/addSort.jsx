@@ -3,6 +3,7 @@ import except from 'except';
 import DataListWrapper from '../Data/DataListWrapper';
 import getRowValue from '../Data/getRowValue';
 import { createPropTypeWithProperties } from '../Data/PropTypes';
+import SortTypes from '../Data/SortTypes';
 
 function addSort(TableComponent) {
   class SortTable extends React.Component {
@@ -67,7 +68,7 @@ function addSort(TableComponent) {
             }
           }
 
-          if (sortVal !== 0 && sortDir === 'ASC') {
+          if (sortVal !== 0 && sortDir === SortTypes.DESC) {
             sortVal *= -1;
           }
 

@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_setup.jsx --recursive \"test/**/*.@(js|jsx)\"",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test --watch"
   },
   "repository": {
     "type": "git",
@@ -58,6 +58,7 @@
     "react-dom": "^15.0.0",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",
+    "sinon": "^1.17.6",
     "webpack": "^1.8.3",
     "webpack-dev-server": "^1.8.0"
   },

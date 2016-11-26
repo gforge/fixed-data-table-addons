@@ -1,16 +1,38 @@
 import React, { PropTypes } from 'react';
 import except from 'except';
-
-const SortTypes = {
-  ASC: 'ASC',
-  DESC: 'DESC',
-};
+import SortTypes from '../Data/SortTypes';
 
 function reverseSortDirection(sortDir) {
   return sortDir === SortTypes.DESC ? SortTypes.ASC : SortTypes.DESC;
 }
 
+function convertIndicator2Object(ind) {
+  let indicator;
+
+  if (typeof ind === 'string') {
+    indicator = {
+      active: ind,
+      inactive: '',
+    };
+  } else if (typeof ind === 'object' &&
+    {}.hasOwnProperty.call(ind, 'active') &&
+    {}.hasOwnProperty.call(ind, 'inactive')) {
+    indicator = ind;
+  } else {
+    throw new Error('The indicator is of invalid type. Expected either a string' +
+                    ' for the active status or an object with the elements "active"' +
+                    ' and "inactive"');
+  }
+
+  return (indicator);
+}
+
 function addSort2Cell(Cell, indDesc = '↓', indAsc = '↑') {
+  const indicator = {
+    desc: convertIndicator2Object(indDesc),
+    asc: convertIndicator2Object(indAsc),
+  };
+
   /**
   * This React component adds to the header sort funcitonality decorating with
   * arrow and adding a onClick to the header link.
@@ -32,7 +54,7 @@ function addSort2Cell(Cell, indDesc = '↓', indAsc = '↑') {
             this.props.columnKey,
             this.props.sortDir ?
             reverseSortDirection(this.props.sortDir) :
-            SortTypes.DESC
+            SortTypes.DESC,
           );
         });
       }
@@ -45,13 +67,18 @@ function addSort2Cell(Cell, indDesc = '↓', indAsc = '↑') {
       const other = except(this.props, Object.keys(SortCell.propTypes));
       let sortInd = '';
       if (sortDir && columnKey === sortColumn) {
-        sortInd = (sortDir === SortTypes.DESC ? indDesc : indAsc);
+        sortInd =
+          (<div className="sortIndicator">
+            {sortDir === SortTypes.DESC ? indicator.desc.active : indicator.desc.inactive}
+            {sortDir !== SortTypes.DESC ? indicator.asc.active : indicator.asc.inactive}
+          </div>);
       }
 
       return (
         <Cell columnKey={columnKey} {...other}>
           <a onClick={this._onSortChange} tabIndex="0">
-            {children} {sortInd}
+            {children}
+            {sortInd}
           </a>
         </Cell>
       );

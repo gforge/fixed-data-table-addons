@@ -5,20 +5,22 @@ import FDT2 from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import Data from '../stub/Data';
-import { getTextCell } from '../test_setup';
+import { addDataCtxt } from '../../HOC';
+import { getCtxtTextCell } from '../test_setup';
 
-describe('Basic test for verifying core table functionality', () => {
+describe('Investigate addDataCtxt', () => {
   const data = new Data();
   function getNode(Lib) {
-    const TextCell = getTextCell(Lib);
+    const TextCell = getCtxtTextCell(Lib);
+    const DataTable = addDataCtxt(Lib.Table);
 
     const node = mount(
-      <Lib.Table
+      <DataTable
         rowHeight={50}
         headerHeight={50}
         height={500}
         width={500}
-        rowsCount={data.getSize()}
+        data={data}
       >
         <Lib.Column
           columnKey="id"
@@ -32,7 +34,7 @@ describe('Basic test for verifying core table functionality', () => {
           header={<Lib.Cell>Name</Lib.Cell>}
           cell={<TextCell data={data} />}
         />
-      </Lib.Table>);
+      </DataTable>);
 
     return node;
   }
