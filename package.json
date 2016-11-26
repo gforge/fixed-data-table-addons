@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "cover": "istanbul cover _mocha -- --require babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\""
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,6 @@
   "author": "Max Gordon",
   "license": "MIT",
   "peerDependencies": {
-    "except": "^0.1.3",
     "react": "^0.14.0 || ^15.0.0",
     "react-bootstrap": "^0.30.6",
     "react-dom": "^0.14.0 || ^15.0.0"
@@ -39,6 +39,7 @@
     "chai-jquery": "^2.0.0",
     "coveralls": "^2.11.15",
     "dirty-chai": "^1.2.2",
+    "enzyme": "^2.6.0",
     "eslint": "^3.10.2",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
@@ -65,9 +66,5 @@
   "bugs": {
     "url": "https://github.com/gforge/fixed-data-table-addons/issues"
   },
-  "homepage": "https://github.com/gforge/fixed-data-table-addons#readme",
-  "dependencies": {
-    "enzyme": "^2.6.0",
-    "except": "^0.1.3"
-  }
+  "homepage": "https://github.com/gforge/fixed-data-table-addons#readme"
 }
