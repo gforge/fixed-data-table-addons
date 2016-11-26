@@ -1,6 +1,6 @@
 import React from 'react';
 import except from 'except';
-import { PropTypeData } from '../Data/PropTypes';
+import { PropTypes } from '../Data';
 
 function addDataCtxt(Wrapped) {
   class ContextClass extends React.Component {
@@ -55,12 +55,12 @@ function addDataCtxt(Wrapped) {
   }
 
   ContextClass.childContextTypes = {
-    data: PropTypeData,
+    data: PropTypes.BasicData,
     version: React.PropTypes.number,
   };
 
   ContextClass.propTypes = {
-    data: PropTypeData,
+    data: PropTypes.BasicData,
   };
 
   return ContextClass;

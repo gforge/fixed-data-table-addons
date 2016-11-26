@@ -1,9 +1,6 @@
 import React from 'react';
 import except from 'except';
-import DataListWrapper from '../Data/DataListWrapper';
-import getRowValue from '../Data/getRowValue';
-import { createPropTypeWithProperties } from '../Data/PropTypes';
-import SortTypes from '../Data/SortTypes';
+import { getRowValue, DataListWrapper, PropTypes, SortTypes } from '../Data';
 
 function addSort(TableComponent) {
   class SortTable extends React.Component {
@@ -94,7 +91,7 @@ function addSort(TableComponent) {
   }
 
   SortTable.propTypes = {
-    data: createPropTypeWithProperties(['getSize', 'getObjectAt']),
+    data: PropTypes.createWithProps(['getSize', 'getObjectAt']),
     sortColumn: React.PropTypes.string,
     sortDir: React.PropTypes.string,
     children: React.PropTypes.node,

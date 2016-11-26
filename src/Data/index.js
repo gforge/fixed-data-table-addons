@@ -1,11 +1,4 @@
-import DataListWrapper from './DataListWrapper';
-import PropTypes from './PropTypes';
-import SortTypes from './SortTypes';
-
-const Data = {
-  DataListWrapper,
-  PropTypes,
-  SortTypes,
-};
-
-module.exports = Data;
+export DataListWrapper from './DataListWrapper';
+export * as PropTypes from './PropTypes';
+export SortTypes from './SortTypes';
+export getRowValue from './getRowValue';

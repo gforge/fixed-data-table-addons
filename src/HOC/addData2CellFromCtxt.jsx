@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypeData } from '../Data/PropTypes';
+import { PropTypes } from '../Data';
 
 function addData2CellFromCtxt(Cell) {
   const DataCell = (props, { data }) => {
@@ -8,7 +8,7 @@ function addData2CellFromCtxt(Cell) {
   };
 
   DataCell.contextTypes = {
-    data: PropTypeData,
+    data: PropTypes.BasicData,
   };
 
   return DataCell;

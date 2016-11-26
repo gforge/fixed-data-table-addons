@@ -3,7 +3,9 @@ import jsdom from 'jsdom';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import dirtyChai from 'dirty-chai';
-import { PropTypeData } from '../src/Data/PropTypes';
+import { Data } from '../main';
+
+const PropTypes = Data.PropTypes;
 
 const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.document = doc;
@@ -22,7 +24,7 @@ export function getTextCell(Lib) {
   TxtCell.propTypes = {
     rowIndex: React.PropTypes.number,
     columnKey: React.PropTypes.string,
-    data: PropTypeData,
+    data: PropTypes.BasicData,
   };
 
   return TxtCell;
@@ -43,7 +45,7 @@ export function getCtxtTextCell(Lib) {
   };
 
   TxtCtxt.contextTypes = {
-    data: PropTypeData,
+    data: PropTypes.BasicData,
   };
 
   return TxtCtxt;

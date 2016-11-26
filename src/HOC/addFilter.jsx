@@ -1,8 +1,6 @@
 import React from 'react';
 import except from 'except';
-import DataListWrapper from '../Data/DataListWrapper';
-import getRowValue from '../Data/getRowValue';
-import { createPropTypeWithProperties, PropTypeFilter } from '../Data/PropTypes';
+import { DataListWrapper, getRowValue, PropTypes } from '../Data/';
 
 function match(haystack, needle) {
   let hay = haystack;
@@ -103,9 +101,9 @@ function addFilter(TableComponent, filter = filterFn) {
   }
 
   FilterTable.propTypes = {
-    data: createPropTypeWithProperties(['getSize', 'getObjectAt']),
+    data: PropTypes.createWithProps(['getSize', 'getObjectAt']),
     children: React.PropTypes.node,
-    filters: PropTypeFilter,
+    filters: PropTypes.Filter,
   };
 
   return FilterTable;
