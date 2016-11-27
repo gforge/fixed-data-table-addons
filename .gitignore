@@ -3,3 +3,4 @@ node_modules
 *.log*
 chrome-user-data
 coverage
+build
