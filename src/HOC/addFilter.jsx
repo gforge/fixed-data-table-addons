@@ -1,6 +1,7 @@
 import React from 'react';
 import except from 'except';
-import { DataListWrapper, getRowValue, PropTypes } from '../Data/';
+import { DataListWrapper, getRowValue } from '../Data';
+import * as PropTypes from '../PropTypes';
 
 function match(haystack, needle) {
   let hay = haystack;

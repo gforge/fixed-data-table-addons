@@ -1,6 +1,7 @@
 import React from 'react';
 import except from 'except';
-import { getRowValue, DataListWrapper, PropTypes, SortTypes } from '../Data';
+import { getRowValue, DataListWrapper, SortTypes } from '../Data';
+import * as PropTypes from '../PropTypes';
 
 function addSort(TableComponent) {
   class SortTable extends React.Component {
