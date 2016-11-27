@@ -3,7 +3,7 @@ import jsdom from 'jsdom';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import dirtyChai from 'dirty-chai';
-import { PropTypes } from '../main';
+import { PropTypes } from '../src';
 
 const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.document = doc;

@@ -1,6 +1,6 @@
-import * as HOC_ from './src/HOC';
-import * as Data_ from './src/Data';
-import * as PropTypes_ from './src/PropTypes';
+import * as HOC_ from './HOC';
+import * as Data_ from './Data';
+import * as PropTypes_ from './PropTypes';
 
 export const HOC = HOC_;
 export const Data = Data_;
@@ -10,4 +10,4 @@ export default {
   HOC,
   Data,
   PropTypes,
-}
+};
