@@ -1,12 +1,14 @@
 {
   "name": "fixed-data-table-addons",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Addons for the fixed-data-table & fixed-data-table-2",
-  "main": "main.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "clear && mocha --compilers js:babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
     "test:watch": "npm run test -- --watch",
-    "cover": "clear && istanbul cover _mocha -- --require babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\""
+    "cover": "clear && istanbul cover _mocha -- --require babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
+    "build": "babel src --out-dir build",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
