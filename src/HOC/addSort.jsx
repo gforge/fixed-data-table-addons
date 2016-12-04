@@ -41,7 +41,8 @@ function addSort(TableComponent) {
       const { sortColumn, sortDir } = this.props;
       let sortIndexes = null;
       if (sortColumn &&
-          sortColumn.length > 0) {
+          sortColumn.length > 0 &&
+          this.props.data.getSize() > 0) {
         sortIndexes = this._getIndexes();
         sortIndexes.sort((indexA, indexB) => {
           const rowA = this.props.data.getObjectAt(indexA);

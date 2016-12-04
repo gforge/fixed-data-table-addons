@@ -61,7 +61,8 @@ function addFilter(TableComponent, filter = filterFn) {
         .forEach(key => (filters[key] = this.props.filters[key].toLowerCase()));
 
       let filteredIndexes = null;
-      if (Object.keys(filters).length > 0) {
+      if (Object.keys(filters).length > 0 &&
+          this.props.data.getSize() > 0) {
         filteredIndexes = [];
         for (let index = 0; index < this.props.data.getSize(); index += 1) {
           const row = this.props.data.getObjectAt(index);
