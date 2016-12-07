@@ -1,5 +1,36 @@
 import React, { PropTypes } from 'react';
-import { FormControl } from 'react-bootstrap';
+
+const FormControl = ({ value, placeholder, onChange }) => {
+  const style = {
+    display: 'block',
+    borderRadius: '0.3em',
+    width: '100%',
+    borderStyle: 'solid',
+    borderColor: '#d3d3d3',
+    padding: '3px',
+  };
+
+  return (
+    <input
+      value={value}
+      placeholder={placeholder}
+      onChange={onChange}
+      style={style}
+    />);
+};
+
+FormControl.propTypes = {
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
+  placeholder: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  // The onChange should take 2 arguments - the columnKey + value
+  onChange: PropTypes.func.isRequired,
+};
 
 function addForm(Cell, FormElement = FormControl, ValuePropType = PropTypes.oneOfType([
   PropTypes.number,
@@ -35,6 +66,5 @@ function addForm(Cell, FormElement = FormControl, ValuePropType = PropTypes.oneO
 
   return FormCell;
 }
-
 
 export default addForm;
