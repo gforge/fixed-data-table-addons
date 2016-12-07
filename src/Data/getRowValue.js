@@ -1,5 +1,5 @@
 export default function getRowValue(row, key) {
-  if ({}.hasOwnProperty.call(row, 'get')) {
+  if (typeof row.get === 'function') {
     return (row.get(key));
   }
 
