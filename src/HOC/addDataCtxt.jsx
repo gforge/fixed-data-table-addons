@@ -3,13 +3,13 @@ import except from 'except';
 import { BasicData } from '../PropTypes';
 
 function addDataCtxt(Wrapped) {
-  class ContextClass extends React.Component {
+  class DataClass extends React.Component {
     constructor(props) {
       super(props);
 
       this.refresh = this.refresh.bind(this);
       const data = this.props.data;
-      if ({}.hasOwnProperty.call(data, 'setCallback')) {
+      if (typeof data.setCallback === 'function') {
         data.setCallback(this.refresh, 'data');
       }
 
@@ -45,7 +45,7 @@ function addDataCtxt(Wrapped) {
     }
 
     render() {
-      const other = except(this.props, Object.keys(ContextClass.propTypes));
+      const other = except(this.props, Object.keys(DataClass.propTypes));
       return (
         <Wrapped
           rowsCount={this.state.data.getSize()}
@@ -54,16 +54,16 @@ function addDataCtxt(Wrapped) {
     }
   }
 
-  ContextClass.childContextTypes = {
+  DataClass.childContextTypes = {
     data: BasicData,
     version: React.PropTypes.number,
   };
 
-  ContextClass.propTypes = {
+  DataClass.propTypes = {
     data: BasicData,
   };
 
-  return ContextClass;
+  return DataClass;
 }
 
 
