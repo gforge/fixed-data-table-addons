@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import except from 'except';
 import { getRowValue, DataListWrapper, SortTypes } from '../Data';
-import * as PropTypes from '../PropTypes';
+import * as CustomPropTypes from '../PropTypes';
 
 function addSort(TableComponent) {
   class SortTable extends React.Component {
@@ -93,10 +94,10 @@ function addSort(TableComponent) {
   }
 
   SortTable.propTypes = {
-    data: PropTypes.createWithProps(['getSize', 'getObjectAt']),
-    sortColumn: React.PropTypes.string,
-    sortDir: React.PropTypes.string,
-    children: React.PropTypes.node,
+    data: CustomPropTypes.createWithProps(['getSize', 'getObjectAt']),
+    sortColumn: PropTypes.string,
+    sortDir: PropTypes.string,
+    children: PropTypes.node,
   };
 
   return SortTable;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import except from 'except';
 import { BasicData } from '../PropTypes';
 
@@ -56,7 +57,7 @@ function addDataCtxt(Wrapped) {
 
   DataClass.childContextTypes = {
     data: BasicData,
-    version: React.PropTypes.number,
+    version: PropTypes.number,
   };
 
   DataClass.propTypes = {

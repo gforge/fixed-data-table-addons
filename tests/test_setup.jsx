@@ -1,9 +1,10 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */import React from 'react';
+import PropTypes from 'prop-types';
 import jsdom from 'jsdom';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import dirtyChai from 'dirty-chai';
-import { PropTypes } from '../src';
+import { PropTypes as CustomPropTypes } from '../src';
 
 const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.document = doc;
@@ -20,9 +21,9 @@ export function getTextCell(Lib) {
     </Lib.Cell>);
 
   TxtCell.propTypes = {
-    rowIndex: React.PropTypes.number,
-    columnKey: React.PropTypes.string,
-    data: PropTypes.BasicData,
+    rowIndex: PropTypes.number,
+    columnKey: PropTypes.string,
+    data: CustomPropTypes.BasicData,
   };
 
   return TxtCell;
@@ -38,12 +39,12 @@ export function getCtxtTextCell(Lib) {
   };
 
   TxtCtxt.propTypes = {
-    rowIndex: React.PropTypes.number,
-    columnKey: React.PropTypes.string,
+    rowIndex: PropTypes.number,
+    columnKey: PropTypes.string,
   };
 
   TxtCtxt.contextTypes = {
-    data: PropTypes.BasicData,
+    data: CustomPropTypes.BasicData,
   };
 
   return TxtCtxt;

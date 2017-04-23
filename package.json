@@ -1,6 +1,6 @@
 {
   "name": "fixed-data-table-addons",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Addons for the fixed-data-table & fixed-data-table-2",
   "main": "build/index.js",
   "scripts": {
@@ -68,6 +68,7 @@
   },
   "homepage": "https://github.com/gforge/fixed-data-table-addons#readme",
   "dependencies": {
-    "except": "^0.1.3"
+    "except": "^0.1.3",
+    "prop-types": "^15.5.8"
   }
 }
