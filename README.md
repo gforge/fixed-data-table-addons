@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/gforge/fixed-data-table-addons.svg?branch=master)](https://travis-ci.org/gforge/fixed-data-table-addons)
 
 
-This package supplements the [fixed-data-table](fdt) and Schrödinger's [fixed-data-table-2](fdt2) with higher order components that add on context data, filtering and sorting. The package is the results from an [issue](fdt2-issue) that added an example showing how to add pagination, context and filtering to the [fixed-data-table-2](fdt2).
+This package supplements the [fixed-data-table][fdt] and Schr&ouml;dinger's [fixed-data-table-2][fdt2] with higher order components that add on context data, filtering and sorting. The package is the results from an [issue][fdt2-issue] that added an example showing how to add pagination, context and filtering to the [fixed-data-table-2][fdt2].
 
 ## Package content
 
