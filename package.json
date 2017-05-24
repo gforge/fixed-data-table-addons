@@ -23,9 +23,9 @@
   "author": "Max Gordon",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0",
-    "react-bootstrap": "^0.30.6",
-    "react-dom": "^0.14.0 || ^15.0.0"
+    "react": "^0.14.x || ^15.x",
+    "react-bootstrap": "^0.31.x",
+    "react-dom": "^0.14.0 || ^15.x"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
