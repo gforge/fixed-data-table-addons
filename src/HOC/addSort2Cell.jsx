@@ -28,7 +28,7 @@ function convertIndicator2Object(ind) {
   return (indicator);
 }
 
-function addSort2Cell(Cell, indDesc = '↓', indAsc = '↑') {
+function addSort2Cell(Cell, indDesc = '↓', indAsc = '↑', alwaysShow = true) {
   const indicator = {
     desc: convertIndicator2Object(indDesc),
     asc: convertIndicator2Object(indAsc),
@@ -72,6 +72,12 @@ function addSort2Cell(Cell, indDesc = '↓', indAsc = '↑') {
           (<span className="sortIndicator">
             {sortDir === SortTypes.DESC ? indicator.desc.active : indicator.desc.inactive}
             {sortDir !== SortTypes.DESC ? indicator.asc.active : indicator.asc.inactive}
+          </span>);
+      } else if (alwaysShow) {
+        sortInd =
+          (<span className="sortIndicator">
+            {indicator.desc.inactive}
+            {indicator.asc.inactive}
           </span>);
       }
 

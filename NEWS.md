@@ -1,5 +1,8 @@
 # NEWS for fixed-data-table-addons
 
+## 0.3.2
+- Added inactive to show even if column isn't selected
+
 ## 0.3.1
 - Sorting can now be forced on the entire table although this isn't recommended - use back-end for sorting.
 - Fixed sort cell layout that now allows for react elements
