@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "test": "clear && mocha --compilers js:babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
-    "test:watch": "npm run test -- --watch",
+    "test:watch": "nodemon --exec 'npm run test --R' -e jsx,js,jade,graphql,ts,json",
     "cover": "clear && istanbul cover _mocha -- --require babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
     "build": "babel src --out-dir build",
     "prepublish": "npm run build"
@@ -53,6 +53,7 @@
     "jquery": "^3.2.1",
     "jsdom": "^11.0.0",
     "mocha": "^3.4.2",
+    "nodemon": "^1.11.0",
     "react": "^15.6.1",
     "react-docgen": "^2.16.0",
     "react-dom": "^15.6.1",

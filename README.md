@@ -17,7 +17,7 @@ This object is for directly adding functionality to the tables. This can be eith
 - `addData2CellFromCtxt` that adds moves the data context into a regular property.
 - `addFilter` this allows adding a filtering property to the component that searches the data for matching elements. The standard matching is done using string comparisons but the function takes a second `filter` argument that allows specifying any function that returns a boolean.
 - `addForm2Cell` this adds an input form to a cell that is convenient when you want to add to your header the filter input field.
-- `addSort` this adds sorting to the table.
+- `addSort` this adds sorting to the table. It is recommended that you do the actual sort in the back-end. If you have a short table and you want to force sorting all the elements directly then set the second argument to `false`.
 - `addSort2Cell` this adds a sorting link component to a header cell.
 
 ### The Data object

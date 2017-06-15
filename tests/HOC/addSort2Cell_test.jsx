@@ -14,7 +14,24 @@ describe('Investigate addSort2Cell', () => {
 
     const SortCell = addSort2Cell(localProps => (
       <Lib.Cell {...localProps} id="test_object" />
-    ), '_desc_', '_asc_');
+    ), '_desc_', <i>_asc_italic_</i>);
+
+    const node = mount(<SortCell {...props} onSortChange={sortTriggered}>
+      test
+    </SortCell>);
+
+    return node;
+  }
+
+  function getNodeWithClass(Lib, props) {
+    sortTriggered = sinon.spy();
+
+    class TestSortCell extends React.Component {
+      render() {
+        return <Lib.Cell {...this.props} id="test_class_object" />;
+      }
+    }
+    const SortCell = addSort2Cell(TestSortCell, '_desc_', '_asc_');
 
     const node = mount(<SortCell {...props} onSortChange={sortTriggered}>
       test
@@ -31,7 +48,7 @@ describe('Investigate addSort2Cell', () => {
         sortDir: SortTypes.ASC,
       });
 
-      expect(node.find('.sortIndicator').text()).to.equal('_asc_');
+      expect(node.find('.sortIndicator > i').text()).to.equal('_asc_italic_');
     });
 
     it('should have the desc descriptor if sorting is descending', () => {
@@ -44,8 +61,18 @@ describe('Investigate addSort2Cell', () => {
       expect(node.find('.sortIndicator').text()).to.equal('_desc_');
     });
 
+    it('should have the asc descriptor if sorting is ascending and should work with class', () => {
+      const node = getNodeWithClass(Lib, {
+        columnKey: 'id',
+        sortColumn: 'id',
+        sortDir: SortTypes.ASC,
+      });
+
+      expect(node.find('.sortIndicator').text()).to.equal('_asc_');
+    });
+
     it('chaning props should have the desc descriptor swap descriptor', () => {
-      const node = getNode(Lib, {
+      const node = getNodeWithClass(Lib, {
         columnKey: 'id',
         sortColumn: 'id',
         sortDir: SortTypes.DESC,

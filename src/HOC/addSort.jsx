@@ -4,7 +4,7 @@ import except from 'except';
 import { getRowValue, DataListWrapper, SortTypes } from '../Data';
 import * as CustomPropTypes from '../PropTypes';
 
-function addSort(TableComponent) {
+function addSort(TableComponent, onlyTouched = true) {
   class SortTable extends React.Component {
     constructor(props) {
       super(props);
@@ -48,8 +48,9 @@ function addSort(TableComponent) {
         sortIndexes.sort((indexA, indexB) => {
           const { data } = this.props;
           // Don't trigger get if this object isn't visible according to the table
-          // this will otherwise download a paged data
-          if (!data.isTouched(indexA) || !data.isTouched(indexB)) return 0;
+          // this will otherwise download a paged data. This should be handled by the
+          // backend as it will otherwise cascade a download
+          if (onlyTouched && (!data.isTouched(indexA) || !data.isTouched(indexB))) return 0;
 
           const rowA = this.props.data.getObjectAt(indexA);
           const rowB = this.props.data.getObjectAt(indexB);

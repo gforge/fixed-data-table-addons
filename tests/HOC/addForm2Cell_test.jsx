@@ -15,7 +15,7 @@ describe('Investigate addForm2Cell', () => {
       <Lib.Cell {...localProps} id="test_object" />
     ));
 
-    const node = mount(<FormCell {...props} onChange={onChange}>
+    const node = mount(<FormCell {...props} value="something" onChange={onChange}>
       test
     </FormCell>);
 

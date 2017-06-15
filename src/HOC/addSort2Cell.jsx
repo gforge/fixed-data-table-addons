@@ -10,7 +10,7 @@ function reverseSortDirection(sortDir) {
 function convertIndicator2Object(ind) {
   let indicator;
 
-  if (typeof ind === 'string') {
+  if (typeof ind === 'string' || React.isValidElement(ind)) {
     indicator = {
       active: ind,
       inactive: '',
@@ -20,7 +20,7 @@ function convertIndicator2Object(ind) {
     {}.hasOwnProperty.call(ind, 'inactive')) {
     indicator = ind;
   } else {
-    throw new Error('The indicator is of invalid type. Expected either a string' +
+    throw new Error(`The indicator is of invalid type (${typeof ind}). Expected either a string` +
                     ' for the active status or an object with the elements "active"' +
                     ' and "inactive"');
   }
@@ -69,10 +69,10 @@ function addSort2Cell(Cell, indDesc = '↓', indAsc = '↑') {
       let sortInd = '';
       if (sortDir && columnKey === sortColumn) {
         sortInd =
-          (<div className="sortIndicator">
+          (<span className="sortIndicator">
             {sortDir === SortTypes.DESC ? indicator.desc.active : indicator.desc.inactive}
             {sortDir !== SortTypes.DESC ? indicator.asc.active : indicator.asc.inactive}
-          </div>);
+          </span>);
       }
 
       return (
