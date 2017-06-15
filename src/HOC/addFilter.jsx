@@ -66,22 +66,29 @@ function addFilter(TableComponent, filter = filterFn) {
           this.props.data.getSize() > 0) {
         filteredIndexes = [];
         for (let index = 0; index < this.props.data.getSize(); index += 1) {
-          const row = this.props.data.getObjectAt(index);
-          // If the object is null it may be loading and should therefore be kept
-          if (row === null) {
-            filteredIndexes.push(index);
-          } else {
-            let found = true;
-            for (const key of Object.keys(filters)) {
-              found = filter(row, key, filters);
-              if (!found) {
-                break;
+          // Don't trigger get if this object isn't visible according to the table
+          // this will otherwise download a paged data
+          if (this.props.data.isTouched(index)) {
+            const row = this.props.data.getObjectAt(index);
+            // If the object is null it may be loading and should therefore be kept
+            if (row === null) {
+              filteredIndexes.push(index);
+            } else {
+              let found = true;
+              for (const key of Object.keys(filters)) {
+                found = filter(row, key, filters);
+                if (!found) {
+                  break;
+                }
+              }
+
+              if (found) {
+                filteredIndexes.push(index);
               }
             }
-
-            if (found) {
-              filteredIndexes.push(index);
-            }
+          } else {
+            // Don't filter anything that's not in the table
+            filteredIndexes.push(index);
           }
         }
       }

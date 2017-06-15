@@ -1,7 +1,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */import React from 'react';
 import { describe, it } from 'mocha';
-import FDT from 'fixed-data-table';
-import FDT2 from 'fixed-data-table-2';
+import FDT from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import Data from '../stub/Data';
@@ -59,11 +58,7 @@ describe('Investigate addDataCtxt', () => {
     });
   }
 
-  describe('check functionality for fixed-data-table', () => {
-    test(FDT);
-  });
-
   describe('check functionality for fixed-data-table-2', () => {
-    test(FDT2);
+    test(FDT);
   });
 });

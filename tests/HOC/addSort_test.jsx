@@ -1,8 +1,7 @@
 /* eslint "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]*/
 import React from 'react';
 import { describe, it } from 'mocha';
-import FDT from 'fixed-data-table';
-import FDT2 from 'fixed-data-table-2';
+import FDT from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { getCtxtTextCell } from '../test_setup';
@@ -92,11 +91,7 @@ describe('Investigate addSort', () => {
     });
   }
 
-  describe('check functionality with fixed-data-table', () => {
-    test(FDT);
-  });
-
   describe('check functionality with fixed-data-table-2', () => {
-    test(FDT2);
+    test(FDT);
   });
 });

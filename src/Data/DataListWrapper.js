@@ -7,7 +7,8 @@ type DataClass = {
 
 class DataListWrapper {
   _data: DataClass
-  _indexMap: ?Array<any>
+  _indexMap: ?Array<number>
+  _indexesRequested: Map<number, boolean> = new Map()
 
   constructor(
     data: DataClass,
@@ -23,6 +24,12 @@ class DataListWrapper {
     }
   }
 
+  // As we don't want to trigger loading unless the index has been
+  // touched by the table we can use this to check before loading
+  isTouched(index: number) {
+    return this._indexesRequested.get(index) === true;
+  }
+
   getSize() {
     if (!this._indexMap) {
       return this._data.getSize();
@@ -32,6 +39,8 @@ class DataListWrapper {
   }
 
   getObjectAt(index: number) {
+    this._indexesRequested.set(index, true);
+
     if (!this._indexMap) {
       return this._data.getObjectAt(index);
     }

@@ -46,6 +46,11 @@ function addSort(TableComponent) {
           this.props.data.getSize() > 0) {
         sortIndexes = this._getIndexes();
         sortIndexes.sort((indexA, indexB) => {
+          const { data } = this.props;
+          // Don't trigger get if this object isn't visible according to the table
+          // this will otherwise download a paged data
+          if (!data.isTouched(indexA) || !data.isTouched(indexB)) return 0;
+
           const rowA = this.props.data.getObjectAt(indexA);
           const rowB = this.props.data.getObjectAt(indexB);
           if (rowA === null && rowB === null) {

@@ -20,6 +20,10 @@ class Data {
     };
   }
 
+  isTouched(index) {
+    return true;
+  }
+
   /**
    * The callbacks are used to trigger events as new data arrives.
    *
