@@ -2,10 +2,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { JSDOM } from 'jsdom';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import dirtyChai from 'dirty-chai';
 import { PropTypes as CustomPropTypes } from '../src';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;
@@ -29,10 +33,14 @@ chai.use(chaiEnzyme);
 chai.use(dirtyChai);
 
 export function getTextCell(Lib) {
-  const TxtCell = ({ rowIndex, columnKey, data }) => (
-    <Lib.Cell id={`${rowIndex}_${columnKey}`}>
-      {data.getObjectAt(rowIndex)[columnKey]}
-    </Lib.Cell>);
+  const TxtCell = ({ rowIndex, columnKey, data }) => {
+    const id = `${columnKey}_${rowIndex}`;
+    return (
+      <Lib.Cell id={id}>
+        {data.getObjectAt(rowIndex)[columnKey]}
+      </Lib.Cell>);
+  };
+
 
   TxtCell.defaultProps = {
     rowIndex: undefined,
@@ -52,8 +60,8 @@ export function getTextCell(Lib) {
 export function getCtxtTextCell(Lib) {
   const TxtCtxt = ({ rowIndex, columnKey }, { data }) => {
     const row = data.getObjectAt(rowIndex);
-
-    return (<Lib.Cell id={`${row.id}_${columnKey}`}>
+    const id = `${columnKey}_${rowIndex}`;
+    return (<Lib.Cell id={id}>
       {row[columnKey]}
     </Lib.Cell>);
   };

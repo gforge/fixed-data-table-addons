@@ -47,26 +47,25 @@ describe('Investigate addFilter', () => {
 
       for (let i = 0; i < data.getSize(); i += 1) {
         const row = data.getObjectAt(i);
-        expect(node.find(`#${row.id}_id`)).to.have.length(1, `Can't find cell with id: ${row.id}_id`);
-        expect(node.find(`#${row.id}_name`)).to.have.length(1, `Can't find cell with id: ${row.id}_name`);
+        expect(node.find(`#id_${row.id}`).filter('div')).to.have.length(1, `Can't find cell with id: id_${row.id}`);
+        expect(node.find(`#name_${row.id}`).filter('div')).to.have.length(1, `Can't find cell with id: ${row.id}_name`);
       }
     });
 
     describe('add filter should filter - removing takes it back to original status', () => {
       const node = getNode(Lib);
 
-
       it('make sure that only the cells with id=1 are present', () => {
         node.setProps({ filters: { id: 1 } });
-
         for (let i = 0; i < data.getSize(); i += 1) {
           const row = data.getObjectAt(i);
-          if (row.id === 1) {
-            expect(node.find(`#${row.id}_id`)).to.have.length(1, `Can't find cell with id: ${row.id}_id`);
-            expect(node.find(`#${row.id}_name`)).to.have.length(1, `Can't find cell with id: ${row.id}_name`);
+          if (row.id === 0) {
+            expect(node.find(`#id_${row.id}`).filter('div')).to.have.length(1, `Can't find cell with id: id_${row.id}`);
+            expect(node.find(`#name_${row.id}`).filter('div')).to.have.length(1, `Can't find cell with id: ${row.id}_name`);
+            expect(node.find(`#id_${row.id}`).filter('div').text()).to.equal('1', 'While it is the first index it should have the id value of 1');
           } else {
-            expect(node.find(`#${row.id}_id`)).to.have.length(0, `Should not find cell with id: ${row.id}_id`);
-            expect(node.find(`#${row.id}_name`)).to.have.length(0, `Should not find cell with id: ${row.id}_name`);
+            expect(node.find(`#id_${row.id}`)).to.have.length(0, `Should not find cell with id: id_${row.id}`);
+            expect(node.find(`#name_${row.id}`)).to.have.length(0, `Should not find cell with id: ${row.id}_name`);
           }
         }
       });
@@ -76,8 +75,8 @@ describe('Investigate addFilter', () => {
 
         for (let i = 0; i < data.getSize(); i += 1) {
           const row = data.getObjectAt(i);
-          expect(node.find(`#${row.id}_id`)).to.have.length(0, `Should not find cell with id: ${row.id}_id`);
-          expect(node.find(`#${row.id}_name`)).to.have.length(0, `Should not find cell with id: ${row.id}_name`);
+          expect(node.find(`#id_${row.id}`)).to.have.length(0, `Should not find cell with id: id_${row.id}`);
+          expect(node.find(`#name_${row.id}`)).to.have.length(0, `Should not find cell with id: ${row.id}_name`);
         }
       });
 
@@ -88,8 +87,8 @@ describe('Investigate addFilter', () => {
 
         for (let i = 0; i < data.getSize(); i += 1) {
           const row = data.getObjectAt(i);
-          expect(node.find(`#${row.id}_id`)).to.have.length(1, `Can't find cell with id: ${row.id}_id`);
-          expect(node.find(`#${row.id}_name`)).to.have.length(1, `Can't find cell with id: ${row.id}_name`);
+          expect(node.find(`#id_${row.id}`).filter('div')).to.have.length(1, `Can't find cell with id: id_${row.id}`);
+          expect(node.find(`#name_${row.id}`).filter('div')).to.have.length(1, `Can't find cell with id: ${row.id}_name`);
         }
       });
     });

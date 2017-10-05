@@ -49,8 +49,8 @@ describe('Investigate addSort', () => {
     it('should produce the full data in standard order when not sorting', () => {
       const txt = node.html();
       for (let i = 0; i < data.getSize() - 1; i += 1) {
-        const first = new RegExp(`.+id="${i}_id"(.+)`);
-        const second = new RegExp(`id="${i + 1}_id"`);
+        const first = new RegExp(`.+id="id_${i}"(.+)`);
+        const second = new RegExp(`id="id_${i + 1}"`);
         expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
       }
     });
@@ -63,10 +63,10 @@ describe('Investigate addSort', () => {
         });
 
         const txt = node.html();
-        for (let i = data.getSize(); i > 0; i -= 1) {
-          const first = new RegExp(`.+id="${i}_id"(.+)`);
-          const second = new RegExp(`id="${i - 1}_id"`);
-          expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
+        for (let i = data.getSize() - 1; i > 0; i -= 1) {
+          const first = new RegExp(`<div [^>]+id="id_${i}"(.+)`);
+          const second = new RegExp(`id="id_${i - 1}"`);
+          expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i - 1} doesn't appear after ${i}`);
         }
       });
 
@@ -83,8 +83,8 @@ describe('Investigate addSort', () => {
 
         const txt = node.html();
         for (let i = 0; i < data.getSize() - 1; i += 1) {
-          const first = new RegExp(`.+id="${i}_id"(.+)`);
-          const second = new RegExp(`id="${i + 1}_id"`);
+          const first = new RegExp(`.+id="id_${i}"(.+)`);
+          const second = new RegExp(`id="id_${i + 1}"`);
           expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
         }
       });

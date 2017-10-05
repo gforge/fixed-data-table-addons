@@ -26,11 +26,10 @@ describe('Investigate addSort2Cell', () => {
   function getNodeWithClass(Lib, props) {
     sortTriggered = sinon.spy();
 
-    class TestSortCell extends React.Component {
-      render() {
-        return <Lib.Cell {...this.props} id="test_class_object" />;
-      }
-    }
+    const TestSortCell = (testProps) => {
+      const id = 'test_class_object';
+      return (<Lib.Cell {...testProps} id={id} />);
+    };
     const SortCell = addSort2Cell(TestSortCell, '_desc_', '_asc_');
 
     const node = mount(<SortCell {...props} onSortChange={sortTriggered}>

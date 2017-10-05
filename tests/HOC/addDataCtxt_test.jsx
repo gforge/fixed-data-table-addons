@@ -43,16 +43,16 @@ describe('Investigate addDataCtxt', () => {
 
     it('make sure that all cells are present', () => {
       for (let i = 0; i < data.getSize(); i += 1) {
-        expect(node.find(`#${i}_id`)).to.have.length(1, `Can't find cell with id: ${i}_id`);
-        expect(node.find(`#${i}_name`)).to.have.length(1, `Can't find cell with id: ${i}_name`);
+        expect(node.find(`#id_${i}`).filter('div')).to.have.length(1, `Can't find cell with id: id_${i}`);
+        expect(node.find(`#name_${i}`).filter('div')).to.have.length(1, `Can't find cell with id: ${i}_name`);
       }
     });
 
     it('make sure the order is correct', () => {
       const txt = node.html();
       for (let i = 0; i < data.getSize() - 1; i += 1) {
-        const first = new RegExp(`.+id="${i}_id"(.+)`);
-        const second = new RegExp(`id="${i + 1}_id"`);
+        const first = new RegExp(`.+id="id_${i}"(.+)`);
+        const second = new RegExp(`id="id_${i + 1}"`);
         expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
       }
     });
