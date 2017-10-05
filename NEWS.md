@@ -1,5 +1,9 @@
 # NEWS for fixed-data-table-addons
 
+## 0.4.0
+- Updated to React 16
+- Many of the tests were affected by this update and there may be a slight risk of incompatibility
+
 ## 0.3.2
 - Added inactive to show even if column isn't selected
 
