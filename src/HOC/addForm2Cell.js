@@ -1,7 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from 'react';
 
-const FormControl = ({ value, placeholder, onChange }) => {
+type FormProps = {
+  value: string | number,
+  placeholder?: string | number,
+  onChange: (columnKey: string | number, value: string | number) => mixed,
+}
+
+const FormControl = ({ value, placeholder, onChange }: FormProps) => {
   const style = {
     display: 'block',
     borderRadius: '0.3em',
@@ -20,25 +26,24 @@ const FormControl = ({ value, placeholder, onChange }) => {
     />);
 };
 
-FormControl.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
-  placeholder: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  // The onChange should take 2 arguments - the columnKey + value
-  onChange: PropTypes.func.isRequired,
+FormControl.defaultProps = {
+  placeholder: null,
 };
 
-function addForm(Cell, FormElement = FormControl, ValuePropType = PropTypes.oneOfType([
-  PropTypes.number,
-  PropTypes.string,
-  PropTypes.object,
-])) {
-  const FormCell = ({ children, value, columnKey, placeholder, onChange, ...other }) => {
+type FormCellProps = {
+  children: React.Node,
+  value: mixed,
+  columnKey: string | number,
+  placeholder: string,
+  onChange: (columnKey: string | number, value: mixed) => void,
+}
+function addForm(
+  Cell: React.ComponentType<any>,
+  FormElement: React.ComponentType<any> = FormControl,
+) {
+  const FormCell = ({
+    children, value, columnKey, placeholder, onChange, ...other
+  }: FormCellProps) => { // eslint-disable-line
     let data = value;
     if (typeof (data) === 'object' &&
         {}.hasOwnProperty.call(data, columnKey)) {
@@ -48,21 +53,13 @@ function addForm(Cell, FormElement = FormControl, ValuePropType = PropTypes.oneO
     return (
       <Cell columnKey={columnKey} {...other} >
         {children}
-        <FormControl
+        <FormElement
           type="text"
           value={data}
           placeholder={placeholder}
           onChange={e => onChange(columnKey, e.target.value)}
         />
       </Cell>);
-  };
-
-  FormCell.propTypes = {
-    children: PropTypes.node,
-    value: ValuePropType,
-    columnKey: PropTypes.string.isRequired,
-    placeholder: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
   };
 
   return FormCell;

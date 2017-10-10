@@ -12,7 +12,8 @@ class DataListWrapper {
 
   constructor(
     data: DataClass,
-    index: ?Array<any> = null) {
+    index: ?Array<any> = null,
+  ) {
     this._data = data;
     this._indexMap = index;
   }

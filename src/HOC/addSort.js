@@ -1,11 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from 'react';
 import except from 'except';
 import { getRowValue, DataListWrapper, SortTypes } from '../Data';
-import * as CustomPropTypes from '../PropTypes';
+import type { BasicDataType } from '../PropTypes/BasicData';
 
-function addSort(TableComponent, onlyTouched = true) {
-  class SortTable extends React.Component {
+type SortProps = {
+  data: BasicDataType,
+  sortColumn: string,
+  sortDir: string,
+  children: React.Node,
+}
+
+function addSort(
+  TableComponent: React.ComponentType<any>,
+  onlyTouched: boolean = true,
+): React.ComponentType<any> {
+  class SortTable extends React.Component<SortProps, { version: number }> {
     constructor(props) {
       super(props);
 
@@ -16,6 +26,7 @@ function addSort(TableComponent, onlyTouched = true) {
       this.refresh = this.refresh.bind(this);
     }
 
+    refresh: Function
     refresh() {
       this.setState({
         version: this.state.version + 1,
@@ -86,7 +97,7 @@ function addSort(TableComponent, onlyTouched = true) {
     }
 
     render() {
-      const other = except(this.props, Object.keys(SortTable.propTypes));
+      const other = except(this.props, ['children', 'data', 'sortColumn', 'sortDir']);
       const sortedData = this.sort();
       return (
         <TableComponent
@@ -98,13 +109,6 @@ function addSort(TableComponent, onlyTouched = true) {
       );
     }
   }
-
-  SortTable.propTypes = {
-    data: CustomPropTypes.createWithProps(['getSize', 'getObjectAt']),
-    sortColumn: PropTypes.string,
-    sortDir: PropTypes.string,
-    children: PropTypes.node,
-  };
 
   return SortTable;
 }

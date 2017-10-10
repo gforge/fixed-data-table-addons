@@ -1,7 +1,7 @@
-/* eslint "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]*/
+/* eslint "import/no-extraneous-dependencies": ["error", {"devDependencies": true}] */
 import React from 'react';
 import { describe, it } from 'mocha';
-import FDT from 'fixed-data-table-2';
+import { Table, Column, Cell } from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { getCtxtTextCell } from '../test_setup';
@@ -11,10 +11,10 @@ import SortTypes from '../../src/Data/SortTypes';
 
 describe('Investigate addSort', () => {
   const data = new Data();
-  function getNode(Lib) {
-    const SortTable = addSort(addDataCtxt(Lib.Table));
+  function getNode() {
+    const SortTable = addSort(addDataCtxt(Table));
 
-    const TextCell = getCtxtTextCell(Lib);
+    const TextCell = getCtxtTextCell(Cell);
 
     const node = mount(
       <SortTable
@@ -26,27 +26,61 @@ describe('Investigate addSort', () => {
         sortDir=""
         data={data}
       >
-        <Lib.Column
+        <Column
           columnKey="id"
           width={250}
-          header={<Lib.Cell>ID</Lib.Cell>}
+          header={<Cell>ID</Cell>}
           cell={<TextCell />}
         />
-        <Lib.Column
+        <Column
           columnKey="name"
           width={250}
-          header={<Lib.Cell>Name</Lib.Cell>}
+          header={<Cell>Name</Cell>}
           cell={<TextCell />}
         />
-      </SortTable>);
+      </SortTable>,
+    );
 
     return node;
   }
 
-  function test(Lib) {
-    const node = getNode(Lib);
+  const node = getNode();
 
-    it('should produce the full data in standard order when not sorting', () => {
+  it('should produce the full data in standard order when not sorting', () => {
+    const txt = node.html();
+    for (let i = 0; i < data.getSize() - 1; i += 1) {
+      const first = new RegExp(`.+id="id_${i}"(.+)`);
+      const second = new RegExp(`id="id_${i + 1}"`);
+      expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
+    }
+  });
+
+  describe('add sorting column + direction should trigger sort', () => {
+    it('make sure that the order is descending', () => {
+      node.setProps({
+        sortColumn: 'id',
+        sortDir: SortTypes.DESC,
+      });
+
+      const txt = node.html();
+      for (let i = data.getSize() - 1; i > 0; i -= 1) {
+        const first = new RegExp(`<div [^>]+id="id_${i}"(.+)`);
+        const second = new RegExp(`id="id_${i - 1}"`);
+        expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i - 1} doesn't appear after ${i}`);
+      }
+    });
+
+    it('make sure that the order is ascending after changing from descending', () => {
+      node.setProps({
+        sortColumn: 'id',
+        sortDir: SortTypes.DESC,
+      });
+
+      node.setProps({
+        sortColumn: 'name',
+        sortDir: SortTypes.ASC,
+      });
+
       const txt = node.html();
       for (let i = 0; i < data.getSize() - 1; i += 1) {
         const first = new RegExp(`.+id="id_${i}"(.+)`);
@@ -54,44 +88,5 @@ describe('Investigate addSort', () => {
         expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
       }
     });
-
-    describe('add sorting column + direction should trigger sort', () => {
-      it('make sure that the order is descending', () => {
-        node.setProps({
-          sortColumn: 'id',
-          sortDir: SortTypes.DESC,
-        });
-
-        const txt = node.html();
-        for (let i = data.getSize() - 1; i > 0; i -= 1) {
-          const first = new RegExp(`<div [^>]+id="id_${i}"(.+)`);
-          const second = new RegExp(`id="id_${i - 1}"`);
-          expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i - 1} doesn't appear after ${i}`);
-        }
-      });
-
-      it('make sure that the order is ascending after changing from descending', () => {
-        node.setProps({
-          sortColumn: 'id',
-          sortDir: SortTypes.DESC,
-        });
-
-        node.setProps({
-          sortColumn: 'name',
-          sortDir: SortTypes.ASC,
-        });
-
-        const txt = node.html();
-        for (let i = 0; i < data.getSize() - 1; i += 1) {
-          const first = new RegExp(`.+id="id_${i}"(.+)`);
-          const second = new RegExp(`id="id_${i + 1}"`);
-          expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
-        }
-      });
-    });
-  }
-
-  describe('check functionality with fixed-data-table-2', () => {
-    test(FDT);
   });
 });

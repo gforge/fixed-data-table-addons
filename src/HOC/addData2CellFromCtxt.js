@@ -1,10 +1,13 @@
-import React from 'react';
-import { BasicData } from '../PropTypes';
+// @flow
+import * as React from 'react';
+import BasicData, { type BasicDataType } from '../PropTypes/BasicData';
 
-function addData2CellFromCtxt(Cell) {
+function addData2CellFromCtxt<P: {}>(
+  Cell2Expand: React.ComponentType<P & { data: BasicDataType }>,
+): React.ComponentType<P> {
   const DataCell = (props, { data }) => {
     const propsWithData = Object.assign({}, props, { data });
-    return (<Cell {...propsWithData} />);
+    return (<Cell2Expand {...propsWithData} />);
   };
 
   DataCell.contextTypes = {

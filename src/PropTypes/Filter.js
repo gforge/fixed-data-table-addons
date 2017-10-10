@@ -10,7 +10,7 @@ export default function Filter(props, propName, componentName) {
         'is an object that can be used for filtering.',
         'You have provided a:',
         typeof (dataObj),
-      ].join(' ')
+      ].join(' '),
     );
   }
 
@@ -21,7 +21,7 @@ export default function Filter(props, propName, componentName) {
         'requires that',
         propName,
         'isn\'t empty',
-      ].join(' ')
+      ].join(' '),
     );
   }
 

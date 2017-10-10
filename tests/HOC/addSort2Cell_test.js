@@ -1,6 +1,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */import React from 'react';
 import { describe, it } from 'mocha';
-import FDT from 'fixed-data-table-2';
+import { Cell } from 'fixed-data-table-2';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
@@ -9,89 +9,87 @@ import { SortTypes } from '../../src/Data';
 
 describe('Investigate addSort2Cell', () => {
   let sortTriggered;
-  function getNode(Lib, props) {
+  function getNode(props) {
     sortTriggered = sinon.spy();
 
     const SortCell = addSort2Cell(localProps => (
-      <Lib.Cell {...localProps} id="test_object" />
+      <Cell {...localProps} id="test_object" />
     ), '_desc_', <i>_asc_italic_</i>);
 
-    const node = mount(<SortCell {...props} onSortChange={sortTriggered}>
-      test
-    </SortCell>);
+    const node = mount(
+      <SortCell {...props} onSortChange={sortTriggered}>
+        test
+      </SortCell>,
+    );
 
     return node;
   }
 
-  function getNodeWithClass(Lib, props) {
+  function getNodeWithClass(props) {
     sortTriggered = sinon.spy();
 
     const TestSortCell = (testProps) => {
       const id = 'test_class_object';
-      return (<Lib.Cell {...testProps} id={id} />);
+      return (<Cell {...testProps} id={id} />);
     };
     const SortCell = addSort2Cell(TestSortCell, '_desc_', '_asc_');
 
-    const node = mount(<SortCell {...props} onSortChange={sortTriggered}>
-      test
-    </SortCell>);
+    const node = mount(
+      <SortCell {...props} onSortChange={sortTriggered}>
+        test
+      </SortCell>,
+    );
 
     return node;
   }
 
-  function test(Lib) {
-    it('should have the asc descriptor if sorting is ascending', () => {
-      const node = getNode(Lib, {
-        columnKey: 'id',
-        sortColumn: 'id',
-        sortDir: SortTypes.ASC,
-      });
-
-      expect(node.find('.sortIndicator > i').text()).to.equal('_asc_italic_');
+  it('should have the asc descriptor if sorting is ascending', () => {
+    const node = getNode({
+      columnKey: 'id',
+      sortColumn: 'id',
+      sortDir: SortTypes.ASC,
     });
 
-    it('should have the desc descriptor if sorting is descending', () => {
-      const node = getNode(Lib, {
-        columnKey: 'id',
-        sortColumn: 'id',
-        sortDir: SortTypes.DESC,
-      });
+    expect(node.find('.sortIndicator > i').text()).to.equal('_asc_italic_');
+  });
 
-      expect(node.find('.sortIndicator').text()).to.equal('_desc_');
+  it('should have the desc descriptor if sorting is descending', () => {
+    const node = getNode({
+      columnKey: 'id',
+      sortColumn: 'id',
+      sortDir: SortTypes.DESC,
     });
 
-    it('should have the asc descriptor if sorting is ascending and should work with class', () => {
-      const node = getNodeWithClass(Lib, {
-        columnKey: 'id',
-        sortColumn: 'id',
-        sortDir: SortTypes.ASC,
-      });
+    expect(node.find('.sortIndicator').text()).to.equal('_desc_');
+  });
 
-      expect(node.find('.sortIndicator').text()).to.equal('_asc_');
+  it('should have the asc descriptor if sorting is ascending and should work with class', () => {
+    const node = getNodeWithClass({
+      columnKey: 'id',
+      sortColumn: 'id',
+      sortDir: SortTypes.ASC,
     });
 
-    it('chaning props should have the desc descriptor swap descriptor', () => {
-      const node = getNodeWithClass(Lib, {
-        columnKey: 'id',
-        sortColumn: 'id',
-        sortDir: SortTypes.DESC,
-      });
+    expect(node.find('.sortIndicator').text()).to.equal('_asc_');
+  });
 
-      expect(node.find('.sortIndicator').text()).to.equal('_desc_');
-      node.setProps({ sortDir: SortTypes.ASC });
-      expect(node.find('.sortIndicator').text()).to.equal('_asc_');
+  it('chaning props should have the desc descriptor swap descriptor', () => {
+    const node = getNodeWithClass({
+      columnKey: 'id',
+      sortColumn: 'id',
+      sortDir: SortTypes.DESC,
     });
 
-    it('should trigger a sort event when clicked', () => {
-      const node = getNode(Lib);
+    expect(node.find('.sortIndicator').text()).to.equal('_desc_');
+    node.setProps({ sortDir: SortTypes.ASC });
+    expect(node.find('.sortIndicator').text()).to.equal('_asc_');
+  });
 
-      expect(sortTriggered).to.have.property('callCount', 0);
-      node.find('a').simulate('click');
-      expect(sortTriggered).to.have.property('callCount', 1);
-    });
-  }
+  it('should trigger a sort event when clicked', () => {
+    const node = getNode();
 
-  describe('check functionality for fixed-data-table-2', () => {
-    test(FDT);
+    expect(sortTriggered).to.have.property('callCount', 0);
+    node.find('a').simulate('click');
+    expect(sortTriggered).to.have.property('callCount', 1);
   });
 });

@@ -32,13 +32,14 @@ Error.stackTraceLimit = 10;
 chai.use(chaiEnzyme);
 chai.use(dirtyChai);
 
-export function getTextCell(Lib) {
+export function getTextCell(Elmnt) {
   const TxtCell = ({ rowIndex, columnKey, data }) => {
     const id = `${columnKey}_${rowIndex}`;
-    return (
-      <Lib.Cell id={id}>
-        {data.getObjectAt(rowIndex)[columnKey]}
-      </Lib.Cell>);
+    const value = data.getObjectAt(rowIndex)[columnKey];
+    if (Elmnt.Cell) {
+      return (<Elmnt.Cell id={id}>{value}</Elmnt.Cell>);
+    }
+    return (<Elmnt id={id}>{value}</Elmnt>);
   };
 
 
@@ -57,13 +58,15 @@ export function getTextCell(Lib) {
   return TxtCell;
 }
 
-export function getCtxtTextCell(Lib) {
+export function getCtxtTextCell(Elmnt) {
   const TxtCtxt = ({ rowIndex, columnKey }, { data }) => {
     const row = data.getObjectAt(rowIndex);
     const id = `${columnKey}_${rowIndex}`;
-    return (<Lib.Cell id={id}>
-      {row[columnKey]}
-    </Lib.Cell>);
+    const value = row[columnKey];
+    if (Elmnt.Cell) {
+      return (<Elmnt.Cell id={id}>{value}</Elmnt.Cell>);
+    }
+    return (<Elmnt id={id}>{value}</Elmnt>);
   };
 
   TxtCtxt.defaultProps = {

@@ -15,9 +15,12 @@
     "react"
   ],
   "rules":{
+    "brace-style": 0,
     "no-console": 0,
+    "function-paren-newline": ["error", "consistent"],
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "arrow-body-style": ["error", "as-needed", { "requireReturnForObjectLiteral": true }],
-    "no-underscore-dangle": ["error", { "allowAfterThis": true }]
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }

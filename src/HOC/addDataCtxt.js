@@ -1,15 +1,21 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import PropTypes from 'prop-types';
-import except from 'except';
 import { BasicData } from '../PropTypes';
+import type { BasicDataType } from '../PropTypes/BasicData';
 
-function addDataCtxt(Wrapped) {
-  class DataClass extends React.Component {
+function addDataCtxt<P: { data: BasicDataType }>(
+  Wrapped: React.ComponentType<P & { rowsCount: number }>,
+): React.Component<P, { data: BasicDataType, version: number }> {
+  class DataClass extends React.Component<
+    P,
+    { data: BasicDataType, version: number }>
+  {
     constructor(props) {
       super(props);
 
       this.refresh = this.refresh.bind(this);
-      const data = this.props.data;
+      const { data } = this.props;
       if (typeof data.setCallback === 'function') {
         data.setCallback(this.refresh, 'data');
       }
@@ -35,6 +41,7 @@ function addDataCtxt(Wrapped) {
       }
     }
 
+    refresh: Function
     // Force a refresh or the page doesn't re-render
     //
     // The name of the state variable is irrelevant, it will simply trigger
@@ -46,11 +53,10 @@ function addDataCtxt(Wrapped) {
     }
 
     render() {
-      const other = except(this.props, Object.keys(DataClass.propTypes));
       return (
         <Wrapped
           rowsCount={this.state.data.getSize()}
-          {...other}
+          {...this.props}
         />);
     }
   }
@@ -58,10 +64,6 @@ function addDataCtxt(Wrapped) {
   DataClass.childContextTypes = {
     data: BasicData,
     version: PropTypes.number,
-  };
-
-  DataClass.propTypes = {
-    data: BasicData,
   };
 
   return DataClass;

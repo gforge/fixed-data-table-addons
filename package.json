@@ -3,12 +3,17 @@
   "version": "0.4.0",
   "description": "Addons for the fixed-data-table & fixed-data-table-2",
   "main": "build/index.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "test": "clear && mocha --require babel-register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
     "test:watch": "nodemon --exec 'npm run test --R' -e jsx,js,jade,graphql,ts,json",
     "cover": "clear && istanbul cover _mocha -- --require babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
-    "build": "babel src --out-dir build",
-    "prepublish": "npm run build"
+    "build": "npm run babel-prepublish",
+    "prepublish": "npm run babel-prepublish && npm run flow-prepublish",
+    "babel-prepublish": "babel src/ --out-dir build",
+    "flow-prepublish": "flow-copy-source src build"
   },
   "repository": {
     "type": "git",
@@ -42,15 +47,16 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "eslint": "^4.8.0",
-    "eslint-config-airbnb": "^15.1.0",
+    "eslint-config-airbnb": "^16.0.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
     "fixed-data-table-2": "^0.8.1",
     "flow-bin": "^0.56.0",
+    "flow-copy-source": "^1.2.1",
     "istanbul": "^0.4.5",
     "jsdom": "^11.3.0",
-    "mocha": "^4.0.0",
+    "mocha": "^4.0.1",
     "nodemon": "^1.12.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

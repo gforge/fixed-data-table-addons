@@ -1,8 +1,10 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import except from 'except';
 import { DataListWrapper, getRowValue } from '../Data';
 import * as CustomPropTypes from '../PropTypes';
+import type BasicDataType from '../PropTypes/BasicData';
 
 function match(haystack, needle) {
   let hay = haystack;
@@ -22,8 +24,17 @@ function filterFn(row, key, filters) {
   return (match(value, filters[key]));
 }
 
-function addFilter(TableComponent, filter = filterFn) {
-  class FilterTable extends React.Component {
+type Props = {
+  data: BasicDataType,
+  children: React.Node,
+  filters: Map<string, string>,
+}
+
+function addFilter(
+  TableComponent: React.ComponentType<Props>,
+  filter: Function = filterFn,
+): React.Component<Props, { version: number }> {
+  class FilterTable extends React.Component<Props, { version: number }> {
     constructor(props) {
       super(props);
 
@@ -34,6 +45,7 @@ function addFilter(TableComponent, filter = filterFn) {
       };
     }
 
+    refresh: Function
     refresh() {
       this.setState({
         version: this.state.version + 1,
@@ -52,14 +64,20 @@ function addFilter(TableComponent, filter = filterFn) {
       Object
         .keys(this.props.filters)
         .map((key) => {
+          // $FlowFixMe
           if (typeof this.props.filters[key] !== 'string') {
+            // $FlowFixMe
             this.props.filters[key] = this.props.filters[key].toString();
           }
 
           return (key);
         })
+        // $FlowFixMe
         .filter(key => this.props.filters[key].length > 0)
-        .forEach(key => (filters[key] = this.props.filters[key].toLowerCase()));
+        .forEach((key) => {
+          // $FlowFixMe
+          filters[key] = this.props.filters[key].toLowerCase();
+        });
 
       let filteredIndexes = null;
       if (Object.keys(filters).length > 0 &&
@@ -75,8 +93,9 @@ function addFilter(TableComponent, filter = filterFn) {
               filteredIndexes.push(index);
             } else {
               let found = true;
-              for (const key of Object.keys(filters)) {
-                found = filter(row, key, filters);
+              const keys = Object.keys(filters);
+              for (let i = 0; i < keys.length; i += 1) {
+                found = filter(row, keys[i], filters);
                 if (!found) {
                   break;
                 }
@@ -97,8 +116,8 @@ function addFilter(TableComponent, filter = filterFn) {
     }
 
     render() {
-      const other = except(this.props, Object.keys(FilterTable.propTypes));
       const filteredData = this.filter();
+      const other = except(this.props, ['children', 'filters', 'data']);
       return (
         <TableComponent
           data={filteredData}
@@ -109,12 +128,6 @@ function addFilter(TableComponent, filter = filterFn) {
       );
     }
   }
-
-  FilterTable.propTypes = {
-    data: CustomPropTypes.createWithProps(['getSize', 'getObjectAt']),
-    children: PropTypes.node,
-    filters: CustomPropTypes.Filter,
-  };
 
   return FilterTable;
 }
