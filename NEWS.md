@@ -1,5 +1,9 @@
 # NEWS for fixed-data-table-addons
 
+## 0.5.0
+- Added flow-typing
+- Minor changes were added but should have limited impact on backwards compatibility
+
 ## 0.4.0
 - Updated to React 16
 - Many of the tests were affected by this update and there may be a slight risk of incompatibility

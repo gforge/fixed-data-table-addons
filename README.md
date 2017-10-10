@@ -1,4 +1,4 @@
-# The fixed-data-table-addons
+# Addons for the fixed-data-table-2
 
 [![Build Status](https://travis-ci.org/gforge/fixed-data-table-addons.svg?branch=master)](https://travis-ci.org/gforge/fixed-data-table-addons)
 
@@ -9,7 +9,7 @@ This package supplements Schr&ouml;dinger's [fixed-data-table-2][fdt2] with high
 
 The package exports three objects, a `HOC` with the higher order components, a `Data` that contains data specifics and `PropTypes`.
 
-### The `HOC` object
+### The higher-order-components (HOC)
 
 This object is for directly adding functionality to the tables. This can be either for a `Table` or a `Cell` component. The available methods are:
 
@@ -19,6 +19,51 @@ This object is for directly adding functionality to the tables. This can be eith
 - `addForm2Cell` this adds an input form to a cell that is convenient when you want to add to your header the filter input field.
 - `addSort` this adds sorting to the table. It is recommended that you do the actual sort in the back-end. If you have a short table and you want to force sorting all the elements directly then set the second argument to `false`.
 - `addSort2Cell` this adds a sorting link component to a header cell.
+
+#### Data context - example
+
+To use the data context extend your table with the context HOC as below:
+
+```js
+import { Table, Column, Cell } from 'fixed-data-table-2';
+import { HOC } from 'fixed-data-table-addons';
+
+const CoreCell = ({
+  rowIndex, columnKey, data, ...other
+}) => (
+  <Cell {...other}>
+    {data.getObjectAt(rowIndex)[columnKey]}
+  </Cell>
+);
+const ContextCell = addData2CellFromCtxt(CoreCell);
+const DataTable = addDataCtxt(Table);
+
+....
+  render() {
+    return (
+      <DataTable
+        rowHeight={50}
+        headerHeight={50}
+        height={500}
+        width={500}
+        data={data}
+      >
+        <Column
+          columnKey="id"
+          width={250}
+          header={<Cell>ID</Cell>}
+          cell={ContextCell}
+        />
+        <Column
+          columnKey="name"
+          width={250}
+          header={<Cell>Name</Cell>}
+          cell={ContextCell}
+        />
+      </DataTable>      
+    );
+  }
+```
 
 ### The Data object
 

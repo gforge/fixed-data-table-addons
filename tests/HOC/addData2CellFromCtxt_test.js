@@ -10,8 +10,8 @@ describe('Investigate addData2CellFromCtxt', () => {
   const testData = new Data();
 
   function getNode() {
-    const DataCell = addData2CellFromCtxt(({
-      rowIndex, columnKey, data, ...other
+    const CoreCell = ({
+      rowIndex, columnKey, data, ...other // eslint-disable-line
     }) => {
       const output = `\n\tTest data: ${data.getObjectAt(rowIndex)[columnKey]}\n`;
       return (
@@ -19,7 +19,8 @@ describe('Investigate addData2CellFromCtxt', () => {
           {output}
         </Cell>
       );
-    });
+    };
+    const DataCell = addData2CellFromCtxt(CoreCell);
 
     const node = mount(
       <DataCell columnKey="id" rowIndex={0} />,
