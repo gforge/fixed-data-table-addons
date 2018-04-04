@@ -10,10 +10,10 @@
     "test": "clear && mocha --require babel-register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
     "test:watch": "nodemon --exec 'npm run test --R' -e jsx,js,jade,graphql,ts,json",
     "cover": "clear && istanbul cover _mocha -- --require babel-core/register --require ./tests/test_setup.jsx --recursive \"tests/**/*.@(js|jsx)\"",
-    "build": "npm run babel-prepublish",
-    "prepublish": "npm run babel-prepublish && npm run flow-prepublish",
-    "babel-prepublish": "babel src/ --out-dir build",
-    "flow-prepublish": "flow-copy-source src build"
+    "build": "npm run compile && npm run build:flow",
+    "build:clean": "rimraf build",
+    "build:flow": "flow-copy-source -v -i 'test/**' src build",
+    "compile": "npm run build:clean && babel -d build/ src/"
   },
   "repository": {
     "type": "git",
