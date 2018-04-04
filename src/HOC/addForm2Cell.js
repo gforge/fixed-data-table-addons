@@ -45,8 +45,9 @@ function addForm(
     children, value, columnKey, placeholder, onChange, ...other
   }: FormCellProps) => { // eslint-disable-line
     let data = value;
-    if (typeof (data) === 'object' &&
+    if (data && typeof (data) === 'object' &&
         {}.hasOwnProperty.call(data, columnKey)) {
+      // $FlowFixMe
       data = data[columnKey];
     }
 

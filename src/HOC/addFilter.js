@@ -1,10 +1,8 @@
 // @flow
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import except from 'except';
 import { DataListWrapper, getRowValue } from '../Data';
-import * as CustomPropTypes from '../PropTypes';
-import type BasicDataType from '../PropTypes/BasicData';
+import type { BasicDataType } from '../PropTypes/BasicData';
 
 function match(haystack, needle) {
   let hay = haystack;
@@ -129,6 +127,7 @@ function addFilter(
     }
   }
 
+  // $FlowFixMe
   return FilterTable;
 }
 

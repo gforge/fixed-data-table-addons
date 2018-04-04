@@ -66,6 +66,7 @@ function addDataCtxt<P: { data: BasicDataType }>(
     version: PropTypes.number,
   };
 
+  // $FlowFixMe
   return DataClass;
 }
 

@@ -1,4 +1,9 @@
-export default function Filter(props, propName, componentName) {
+// @flow
+export default function Filter(
+  props: { [string]: Object | void },
+  propName: string,
+  componentName: string,
+) {
   const dataObj = props[propName];
 
   if (typeof (dataObj) !== 'object') {

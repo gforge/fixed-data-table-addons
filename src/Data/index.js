@@ -1,8 +1,4 @@
 // @flow
-import _DataListWrapper from './DataListWrapper';
-import _SortTypes from './SortTypes';
-import _getRowValue from './getRowValue';
-
-export const DataListWrapper = _DataListWrapper;
-export const SortTypes = _SortTypes;
-export const getRowValue = _getRowValue;
+export { default as DataListWrapper } from './DataListWrapper';
+export { default as SortTypes } from './SortTypes';
+export { default as getRowValue } from './getRowValue';

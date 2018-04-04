@@ -18,19 +18,19 @@ export default function createWithProps(properties: Array<any>, errorDesc: descs
       return new Error(`${componentName} id required`);
     }
 
-    for (const property of properties) {
-      if (typeof (dataObj[property]) !== 'function') {
-        return new Error(
-          [
-            `${componentName} requires that ${propName}`,
-            `has a '${property}()' function.`,
-            errorDesc[property],
-          ].join(' '));
-      }
+    const errProperty = properties.find(property => typeof (dataObj[property]) !== 'function');
+    if (errProperty) {
+      return new Error(
+        [
+          `${componentName} requires that ${propName}`,
+          `has a '${errProperty}()' function.`,
+          errorDesc[errProperty],
+        ].join(' '),
+      );
     }
 
     return (null);
-  }
+  };
 
   const propFunction: checkFn = (props, propName, componentName) => {
     const dataObj = props[propName];

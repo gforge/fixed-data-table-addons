@@ -1,3 +1,4 @@
+// @flow
 import PropTypes from 'prop-types';
 import { DataListWrapper } from '../Data';
 
