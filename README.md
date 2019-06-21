@@ -2,8 +2,9 @@
 
 [![Build Status](https://travis-ci.org/gforge/fixed-data-table-addons.svg?branch=master)](https://travis-ci.org/gforge/fixed-data-table-addons)
 
-
 This package supplements Schr&ouml;dinger's [fixed-data-table-2][fdt2] with higher order components that add on context data, filtering and sorting. The package is the results from an [issue][fdt2-issue] that added an example showing how to add pagination, context and filtering to the [fixed-data-table-2][fdt2].
+
+**Note**: This package is in maintanance mode and looking for a new owner. I'm currently not using fdt2 and therefore not the best suited for actually maintaining the package.
 
 ## Package content
 
@@ -60,7 +61,7 @@ const DataTable = addDataCtxt(Table);
           header={<Cell>Name</Cell>}
           cell={ContextCell}
         />
-      </DataTable>      
+      </DataTable>
     );
   }
 ```
@@ -77,12 +78,12 @@ The data structure provided to this package should be wrapped in a class that pr
 
 - `getSize()` returns the number of rows.
 - `getObjectAt(index)` returns a row object at a certain index. The row object should either have a `get(columnName)` function used for accessing the column or be just indexeable using the standard `[columnName]` syntax.
-- `setCallback(callbackFunction)` is *optional* and is used together with paginated data. If you have data that will load later and want to trigger events when this happens then add those events using this function.
-- `runCallbacks()` also *optional* and simply runs each of the callbacks received.
+- `setCallback(callbackFunction)` is _optional_ and is used together with paginated data. If you have data that will load later and want to trigger events when this happens then add those events using this function.
+- `runCallbacks()` also _optional_ and simply runs each of the callbacks received.
 
 ### The PropTypes object
 
-The PropTypes provide *property types* as defined by react. It contains:
+The PropTypes provide _property types_ as defined by react. It contains:
 
 - `createWithProps` is a function that creates a proptype that has to contain certain properties. Useful for checking if the data object is correctly specified with the `getObjectAt` and `getSize` functions.
 - `BasicData` is a property type generate using `createWithProps(['getSize', 'getObjectAt', 'isTouched'])`.
