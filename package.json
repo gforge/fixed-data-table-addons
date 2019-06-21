@@ -1,6 +1,6 @@
 {
   "name": "fixed-data-table-addons",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Addons for the fixed-data-table & fixed-data-table-2",
   "main": "build/index.js",
   "files": [
