@@ -3,17 +3,16 @@ type DataClass = {
   setCallback?: (cb: Function, id?: string) => any,
   getSize(): number,
   getObjectAt(index: number): mixed,
-}
+};
 
 class DataListWrapper {
-  _data: DataClass
-  _indexMap: ?Array<number>
-  _indexesRequested: Map<number, boolean> = new Map()
+  _data: DataClass;
 
-  constructor(
-    data: DataClass,
-    index: ?Array<any> = null,
-  ) {
+  _indexMap: ?(number[]);
+
+  _indexesRequested: Map<number, boolean> = new Map();
+
+  constructor(data: DataClass, index?: any[] | null = null) {
     this._data = data;
     this._indexMap = index;
   }
@@ -46,9 +45,7 @@ class DataListWrapper {
       return this._data.getObjectAt(index);
     }
 
-    return this._data.getObjectAt(
-      this._indexMap[index],
-    );
+    return this._data.getObjectAt(this._indexMap[index]);
   }
 }
 

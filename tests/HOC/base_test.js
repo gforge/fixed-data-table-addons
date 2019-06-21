@@ -1,4 +1,4 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */import React from 'react';
+/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */ import React from 'react';
 import { describe, it } from 'mocha';
 import { Table, Column, Cell } from 'fixed-data-table-2';
 import { expect } from 'chai';
@@ -12,13 +12,7 @@ describe('Basic test for verifying core table functionality', () => {
     const TextCell = getTextCell(Cell);
 
     const node = mount(
-      <Table
-        rowHeight={50}
-        headerHeight={50}
-        height={500}
-        width={500}
-        rowsCount={data.getSize()}
-      >
+      <Table rowHeight={50} headerHeight={50} height={500} width={500} rowsCount={data.getSize()}>
         <Column
           columnKey="id"
           width={250}
@@ -53,7 +47,9 @@ describe('Basic test for verifying core table functionality', () => {
     for (let i = 0; i < data.getSize() - 1; i += 1) {
       const first = new RegExp(`.*<div [^>]*id=("id_${i}".+)`);
       const second = new RegExp(`id="id_${i + 1}"`);
-      expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
+      expect(txt.replace(first, '($1)').match(second)).to.not.be.null(
+        `The ${i + 1} doesn't appear after ${i}`,
+      );
     }
   });
 });

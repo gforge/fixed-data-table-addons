@@ -1,4 +1,5 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */import React from 'react';
+/* eslint-disable react/prop-types */
+/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */ import React from 'react';
 import { describe, it } from 'mocha';
 import { Cell } from 'fixed-data-table-2';
 import { expect } from 'chai';
@@ -11,21 +12,17 @@ describe('Investigate addData2CellFromCtxt', () => {
 
   function getNode() {
     const CoreCell = ({
-      rowIndex, columnKey, data, ...other // eslint-disable-line
+      rowIndex,
+      columnKey,
+      data,
+      ...other // eslint-disable-line
     }) => {
       const output = `\n\tTest data: ${data.getObjectAt(rowIndex)[columnKey]}\n`;
-      return (
-        <Cell {...other}>
-          {output}
-        </Cell>
-      );
+      return <Cell {...other}>{output}</Cell>;
     };
     const DataCell = addData2CellFromCtxt(CoreCell);
 
-    const node = mount(
-      <DataCell columnKey="id" rowIndex={0} />,
-      { context: { data: testData } },
-    );
+    const node = mount(<DataCell columnKey="id" rowIndex={0} />, { context: { data: testData } });
 
     return node;
   }

@@ -1,4 +1,4 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */import React from 'react';
+/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */ import React from 'react';
 import { describe, it } from 'mocha';
 import { Cell } from 'fixed-data-table-2';
 import { expect } from 'chai';
@@ -12,9 +12,11 @@ describe('Investigate addSort2Cell', () => {
   function getNode(props) {
     sortTriggered = sinon.spy();
 
-    const SortCell = addSort2Cell(localProps => (
-      <Cell {...localProps} id="test_object" />
-    ), '_desc_', <i>_asc_italic_</i>);
+    const SortCell = addSort2Cell(
+      localProps => <Cell {...localProps} id="test_object" />,
+      '_desc_',
+      <i>_asc_italic_</i>,
+    );
 
     const node = mount(
       <SortCell {...props} onSortChange={sortTriggered}>
@@ -30,7 +32,7 @@ describe('Investigate addSort2Cell', () => {
 
     const TestSortCell = (testProps) => {
       const id = 'test_class_object';
-      return (<Cell {...testProps} id={id} />);
+      return <Cell {...testProps} id={id} />;
     };
     const SortCell = addSort2Cell(TestSortCell, '_desc_', '_asc_');
 

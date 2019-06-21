@@ -37,11 +37,10 @@ export function getTextCell(Elmnt) {
     const id = `${columnKey}_${rowIndex}`;
     const value = data.getObjectAt(rowIndex)[columnKey];
     if (Elmnt.Cell) {
-      return (<Elmnt.Cell id={id}>{value}</Elmnt.Cell>);
+      return <Elmnt.Cell id={id}>{value}</Elmnt.Cell>;
     }
-    return (<Elmnt id={id}>{value}</Elmnt>);
+    return <Elmnt id={id}>{value}</Elmnt>;
   };
-
 
   TxtCell.defaultProps = {
     rowIndex: undefined,
@@ -64,9 +63,9 @@ export function getCtxtTextCell(Elmnt) {
     const id = `${columnKey}_${rowIndex}`;
     const value = row[columnKey];
     if (Elmnt.Cell) {
-      return (<Elmnt.Cell id={id}>{value}</Elmnt.Cell>);
+      return <Elmnt.Cell id={id}>{value}</Elmnt.Cell>;
     }
-    return (<Elmnt id={id}>{value}</Elmnt>);
+    return <Elmnt id={id}>{value}</Elmnt>;
   };
 
   TxtCtxt.defaultProps = {

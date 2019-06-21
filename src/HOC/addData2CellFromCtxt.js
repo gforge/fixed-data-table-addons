@@ -7,7 +7,7 @@ function addData2CellFromCtxt<P: {}>(
 ): React.ComponentType<P> {
   const DataCell = (props, { data }) => {
     const propsWithData = Object.assign({}, props, { data });
-    return (<Cell2Expand {...propsWithData} />);
+    return <Cell2Expand {...propsWithData} />;
   };
 
   DataCell.contextTypes = {
@@ -16,6 +16,5 @@ function addData2CellFromCtxt<P: {}>(
 
   return DataCell;
 }
-
 
 export default addData2CellFromCtxt;

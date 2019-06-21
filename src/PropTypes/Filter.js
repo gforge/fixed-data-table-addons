@@ -4,9 +4,10 @@ export default function Filter(
   propName: string,
   componentName: string,
 ) {
+  // eslint-disable-next-line react/destructuring-assignment
   const dataObj = props[propName];
 
-  if (typeof (dataObj) !== 'object') {
+  if (typeof dataObj !== 'object') {
     return new Error(
       [
         componentName,
@@ -14,21 +15,14 @@ export default function Filter(
         propName,
         'is an object that can be used for filtering.',
         'You have provided a:',
-        typeof (dataObj),
+        typeof dataObj,
       ].join(' '),
     );
   }
 
   if (Object.keys(dataObj).length === 0) {
-    return new Error(
-      [
-        componentName,
-        'requires that',
-        propName,
-        'isn\'t empty',
-      ].join(' '),
-    );
+    return new Error([componentName, 'requires that', propName, "isn't empty"].join(' '));
   }
 
-  return (null);
+  return null;
 }

@@ -5,7 +5,7 @@ type FormProps = {
   value: string | number,
   placeholder?: string | number,
   onChange: (columnKey: string | number, value: string | number) => mixed,
-}
+};
 
 const FormControl = ({ value, placeholder, onChange }: FormProps) => {
   const style = {
@@ -17,13 +17,7 @@ const FormControl = ({ value, placeholder, onChange }: FormProps) => {
     padding: '3px',
   };
 
-  return (
-    <input
-      value={value}
-      placeholder={placeholder}
-      onChange={onChange}
-      style={style}
-    />);
+  return <input value={value} placeholder={placeholder} onChange={onChange} style={style} />;
 };
 
 FormControl.defaultProps = {
@@ -36,23 +30,28 @@ type FormCellProps = {
   columnKey: string | number,
   placeholder: string,
   onChange: (columnKey: string | number, value: mixed) => void,
-}
+};
 function addForm(
   Cell: React.ComponentType<any>,
   FormElement: React.ComponentType<any> = FormControl,
 ) {
   const FormCell = ({
-    children, value, columnKey, placeholder, onChange, ...other
-  }: FormCellProps) => { // eslint-disable-line
+    children,
+    value,
+    columnKey,
+    placeholder,
+    onChange,
+    ...other
+  }: FormCellProps) => {
+    // eslint-disable-line
     let data = value;
-    if (data && typeof (data) === 'object' &&
-        {}.hasOwnProperty.call(data, columnKey)) {
+    if (data && typeof data === 'object' && {}.hasOwnProperty.call(data, columnKey)) {
       // $FlowFixMe
       data = data[columnKey];
     }
 
     return (
-      <Cell columnKey={columnKey} {...other} >
+      <Cell columnKey={columnKey} {...other}>
         {children}
         <FormElement
           type="text"
@@ -60,7 +59,8 @@ function addForm(
           placeholder={placeholder}
           onChange={e => onChange(columnKey, e.target.value)}
         />
-      </Cell>);
+      </Cell>
+    );
   };
 
   return FormCell;

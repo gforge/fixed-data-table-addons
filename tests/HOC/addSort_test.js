@@ -7,6 +7,7 @@ import { mount } from 'enzyme';
 import { getCtxtTextCell } from '../test_setup';
 import { addSort, addDataCtxt } from '../../src/HOC';
 import Data from '../stub/Data';
+// eslint-disable-next-line import/no-named-as-default
 import SortTypes from '../../src/Data/SortTypes';
 
 describe('Investigate addSort', () => {
@@ -26,18 +27,8 @@ describe('Investigate addSort', () => {
         sortDir=""
         data={data}
       >
-        <Column
-          columnKey="id"
-          width={250}
-          header={<Cell>ID</Cell>}
-          cell={<TextCell />}
-        />
-        <Column
-          columnKey="name"
-          width={250}
-          header={<Cell>Name</Cell>}
-          cell={<TextCell />}
-        />
+        <Column columnKey="id" width={250} header={<Cell>ID</Cell>} cell={<TextCell />} />
+        <Column columnKey="name" width={250} header={<Cell>Name</Cell>} cell={<TextCell />} />
       </SortTable>,
     );
 
@@ -51,7 +42,9 @@ describe('Investigate addSort', () => {
     for (let i = 0; i < data.getSize() - 1; i += 1) {
       const first = new RegExp(`.+id="id_${i}"(.+)`);
       const second = new RegExp(`id="id_${i + 1}"`);
-      expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
+      expect(txt.replace(first, '($1)').match(second)).to.not.be.null(
+        `The ${i + 1} doesn't appear after ${i}`,
+      );
     }
   });
 
@@ -66,7 +59,9 @@ describe('Investigate addSort', () => {
       for (let i = data.getSize() - 1; i > 0; i -= 1) {
         const first = new RegExp(`<div [^>]+id="id_${i}"(.+)`);
         const second = new RegExp(`id="id_${i - 1}"`);
-        expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i - 1} doesn't appear after ${i}`);
+        expect(txt.replace(first, '($1)').match(second)).to.not.be.null(
+          `The ${i - 1} doesn't appear after ${i}`,
+        );
       }
     });
 
@@ -85,7 +80,9 @@ describe('Investigate addSort', () => {
       for (let i = 0; i < data.getSize() - 1; i += 1) {
         const first = new RegExp(`.+id="id_${i}"(.+)`);
         const second = new RegExp(`id="id_${i + 1}"`);
-        expect(txt.replace(first, '($1)').match(second)).to.not.be.null(`The ${i + 1} doesn't appear after ${i}`);
+        expect(txt.replace(first, '($1)').match(second)).to.not.be.null(
+          `The ${i + 1} doesn't appear after ${i}`,
+        );
       }
     });
   });

@@ -9,62 +9,56 @@ type SortProps = {
   sortColumn: string,
   sortDir: string,
   children: React.Node,
-}
+};
 
 function addSort(
   TableComponent: React.ComponentType<any>,
   onlyTouched: boolean = true,
-): React.ComponentType<any> {
+): React.ComponentType<SortProps> {
   class SortTable extends React.Component<SortProps, { version: number }> {
-    constructor(props) {
-      super(props);
+    state = {
+      version: 0,
+    };
 
-      this.state = {
-        version: 0,
-      };
-
-      this.refresh = this.refresh.bind(this);
-    }
-
-    refresh: Function
-    refresh() {
+    refresh = () => {
+      const { version } = this.state;
       this.setState({
-        version: this.state.version + 1,
+        version: version + 1,
       });
-    }
+    };
 
     _getDataWrapper(indexMap = null) {
-      const sortedData = new DataListWrapper(this.props.data, indexMap);
+      const { data } = this.props;
+      const sortedData = new DataListWrapper(data, indexMap);
       sortedData.setCallback(this.refresh, 'sort');
       return sortedData;
     }
 
     _getIndexes() {
+      const { data } = this.props;
       const indexes = [];
-      const size = this.props.data.getSize();
+      const size = data.getSize();
       for (let index = 0; index < size; index += 1) {
         indexes.push(index);
       }
 
-      return (indexes);
+      return indexes;
     }
 
     sort() {
+      const { data } = this.props;
       const { sortColumn, sortDir } = this.props;
       let sortIndexes = null;
-      if (sortColumn &&
-          sortColumn.length > 0 &&
-          this.props.data.getSize() > 0) {
+      if (sortColumn && sortColumn.length > 0 && data.getSize() > 0) {
         sortIndexes = this._getIndexes();
         sortIndexes.sort((indexA, indexB) => {
-          const { data } = this.props;
           // Don't trigger get if this object isn't visible according to the table
           // this will otherwise download a paged data. This should be handled by the
           // backend as it will otherwise cascade a download
           if (onlyTouched && (!data.isTouched(indexA) || !data.isTouched(indexB))) return 0;
 
-          const rowA = this.props.data.getObjectAt(indexA);
-          const rowB = this.props.data.getObjectAt(indexB);
+          const rowA = data.getObjectAt(indexA);
+          const rowB = data.getObjectAt(indexB);
           if (rowA === null && rowB === null) {
             return 0;
           }
@@ -97,14 +91,12 @@ function addSort(
     }
 
     render() {
+      const { children } = this.props;
       const other = except(this.props, ['children', 'data', 'sortColumn', 'sortDir']);
       const sortedData = this.sort();
       return (
-        <TableComponent
-          data={sortedData}
-          {...other}
-        >
-          {this.props.children}
+        <TableComponent data={sortedData} {...other}>
+          {children}
         </TableComponent>
       );
     }

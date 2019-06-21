@@ -1,13 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 // @flow
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import except from 'except';
 import { SortTypes } from '../Data';
 
 function reverseSortDirection(sortDir) {
   return sortDir === SortTypes.DESC ? SortTypes.ASC : SortTypes.DESC;
 }
-
 
 type SortCellProp = {
   onSortChange: (columnKey: string | number, 'ASC' | 'DESC') => void,
@@ -17,7 +16,9 @@ type SortCellProp = {
   children: React.Node,
 };
 
-function convertIndicator2Object(ind: any): {
+function convertIndicator2Object(
+  ind: any,
+): {
   active: React.Node,
   inactive: React.Node,
 } {
@@ -28,17 +29,21 @@ function convertIndicator2Object(ind: any): {
       active: ind,
       inactive: '',
     };
-  } else if (typeof ind === 'object' &&
-    {}.hasOwnProperty.call(ind, 'active') &&
-    {}.hasOwnProperty.call(ind, 'inactive')) {
+  } else if (
+    typeof ind === 'object'
+    && {}.hasOwnProperty.call(ind, 'active')
+    && {}.hasOwnProperty.call(ind, 'inactive')
+  ) {
     indicator = ind;
   } else {
-    throw new Error(`The indicator is of invalid type (${typeof ind}). Expected either a string` +
-                    ' for the active status or an object with the elements "active"' +
-                    ' and "inactive"');
+    throw new Error(
+      `The indicator is of invalid type (${typeof ind}). Expected either a string`
+        + ' for the active status or an object with the elements "active"'
+        + ' and "inactive"',
+    );
   }
 
-  return (indicator);
+  return indicator;
 }
 
 function addSort2Cell(
@@ -53,34 +58,23 @@ function addSort2Cell(
   };
 
   /**
-  * This React component adds to the header sort funcitonality decorating with
-  * arrow and adding a onClick to the header link.
-  */
+   * This React component adds to the header sort funcitonality decorating with
+   * arrow and adding a onClick to the header link.
+   */
   class SortCell extends React.Component<SortCellProp> {
-    constructor(props) {
-      super(props);
-
-      this._onSortChange = this._onSortChange.bind(this);
-    }
-
-    _onSortChange: Function
-    _onSortChange(e) {
+    _onSortChange = (e) => {
       e.preventDefault();
 
-      if (this.props.onSortChange) {
+      const { onSortChange, columnKey, sortDir } = this.props;
+      if (onSortChange) {
         // TODO: Add indicator for handling large sort operations
         return new Promise(() => {
-          this.props.onSortChange(
-            this.props.columnKey,
-            this.props.sortDir ?
-              reverseSortDirection(this.props.sortDir) :
-              SortTypes.DESC,
-          );
+          onSortChange(columnKey, sortDir ? reverseSortDirection(sortDir) : SortTypes.DESC);
         });
       }
 
-      return (null);
-    }
+      return null;
+    };
 
     render() {
       const {
@@ -112,7 +106,12 @@ function addSort2Cell(
 
       return (
         <Cell columnKey={columnKey} {...other}>
-          <a onClick={this._onSortChange}>
+          <a
+            onClick={this._onSortChange}
+            role="button"
+            onKeyPress={this._onSortChange}
+            tabIndex={0}
+          >
             {children}
             {sortInd}
           </a>

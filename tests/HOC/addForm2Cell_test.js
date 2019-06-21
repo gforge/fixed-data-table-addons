@@ -1,4 +1,4 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */import React from 'react';
+/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */ import React from 'react';
 import { describe, it } from 'mocha';
 import { Cell } from 'fixed-data-table-2';
 import { expect } from 'chai';
@@ -11,13 +11,11 @@ describe('Investigate addForm2Cell', () => {
   function getNode(props) {
     onChange = sinon.spy();
 
-    const FormCell = addForm2Cell(localProps => (
-      <Cell {...localProps} id="test_object" />
-    ));
+    const FormCell = addForm2Cell(localProps => <Cell {...localProps} id="test_object" />);
 
     const node = mount(
       <FormCell {...props} value="something" onChange={onChange}>
-      test
+        test
       </FormCell>,
     );
 

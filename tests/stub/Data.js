@@ -6,12 +6,12 @@ class Data {
   }
 
   getSize() {
-    return (this.size);
+    return this.size;
   }
 
   getObjectAt(index) {
     if (index < 0 || index >= this.size) {
-      return (null);
+      return null;
     }
 
     return {
@@ -20,7 +20,8 @@ class Data {
     };
   }
 
-  isTouched(index) {
+  // eslint-disable-next-line class-methods-use-this
+  isTouched() {
     return true;
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 // @flow
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -7,10 +8,7 @@ import type { BasicDataType } from '../PropTypes/BasicData';
 function addDataCtxt<P: { data: BasicDataType }>(
   Wrapped: React.ComponentType<P & { rowsCount: number }>,
 ): React.Component<P, { data: BasicDataType, version: number }> {
-  class DataClass extends React.Component<
-    P,
-    { data: BasicDataType, version: number }>
-  {
+  class DataClass extends React.Component<P, { data: BasicDataType, version: number }> {
     constructor(props) {
       super(props);
 
@@ -41,23 +39,19 @@ function addDataCtxt<P: { data: BasicDataType }>(
       }
     }
 
-    refresh: Function
     // Force a refresh or the page doesn't re-render
     //
     // The name of the state variable is irrelevant, it will simply trigger
     // an update event that is propagated into the cells
-    refresh() {
+    refresh = () => {
+      const { version } = this.state;
       this.setState({
-        version: this.state.version + 1,
+        version: version + 1,
       });
-    }
+    };
 
     render() {
-      return (
-        <Wrapped
-          rowsCount={this.state.data.getSize()}
-          {...this.props}
-        />);
+      return <Wrapped rowsCount={this.state.data.getSize()} {...this.props} />;
     }
   }
 
@@ -69,6 +63,5 @@ function addDataCtxt<P: { data: BasicDataType }>(
   // $FlowFixMe
   return DataClass;
 }
-
 
 export default addDataCtxt;
