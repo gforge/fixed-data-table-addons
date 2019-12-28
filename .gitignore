@@ -4,3 +4,5 @@ node_modules
 chrome-user-data
 coverage
 build
+yarn.lock
+package-lock.json
